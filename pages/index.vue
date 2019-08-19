@@ -2,7 +2,11 @@
   <div class="container">
     <van-grid class="recomment" :gutter="10" :column-num="3">
       <van-grid-item v-for="(row, index) in personalizedList" :key="index">
-        <van-image :src="row.picUrl" />
+        <div aspectratio class="recomment-img">
+          <div aspectratio-content>
+            <img v-lazy="row.picUrl">
+          </div>
+        </div>
         <div class="name">
           {{ row.name }}
         </div>
@@ -30,7 +34,12 @@ export default {
 <style lang="less">
   .recomment {
     .name {
-      .lineClamp()
+      .lineClamp();
+      font-size: 38px;
+      color: @font-primary-color;
+    }
+    .recomment-img {
+      aspect-ratio: '394:394';
     }
   }
 </style>

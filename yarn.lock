@@ -7241,6 +7241,13 @@ posix-character-classes@^0.1.0:
   resolved "https://registry.npm.taobao.org/posix-character-classes/download/posix-character-classes-0.1.1.tgz#01eac0fe3b5af71a2a6c02feabb8c1fef7e00eab"
   integrity sha1-AerA/jta9xoqbAL+q7jB/vfgDqs=
 
+postcss-aspect-ratio-mini@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.npm.taobao.org/postcss-aspect-ratio-mini/download/postcss-aspect-ratio-mini-1.0.1.tgz#dfb6572bc5f847415cf5c0457d174c720242c4bd"
+  integrity sha1-37ZXK8X4R0Fc9cBFfRdMcgJCxL0=
+  dependencies:
+    postcss "^7.0.6"
+
 postcss-attribute-case-insensitive@^4.0.1:
   version "4.0.1"
   resolved "https://registry.npm.taobao.org/postcss-attribute-case-insensitive/download/postcss-attribute-case-insensitive-4.0.1.tgz#b2a721a0d279c2f9103a36331c88981526428cc7"

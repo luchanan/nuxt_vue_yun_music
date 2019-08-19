@@ -93,8 +93,9 @@ module.exports = {
     },
     postcss: {
       plugins: {
+        'postcss-aspect-ratio-mini': {},
         'postcss-px-to-viewport': {
-          viewportWidth: 375
+          viewportWidth: 1242
         }
       }
     }
