@@ -18,7 +18,7 @@
 <script>
 import * as API from '~/api/request'
 export default {
-  async asyncData ({ req, res }) {
+  async asyncData ({ req, res, error, params }) {
     // https://zh.nuxtjs.org/guide/async-data/#asyncdata-%E6%96%B9%E6%B3%95
     try {
       let personalized = await API.excute('personalized', { limit: 6 })
@@ -26,6 +26,7 @@ export default {
         personalizedList: personalized.result
       }
     } catch (res) {
+      error({ statusCode: params.statusCode, message: 'Post not found' })
     }
   }
 }
