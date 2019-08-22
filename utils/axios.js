@@ -1,3 +1,6 @@
+
+// nuxt集成了axios这里无法配置，待优化
+// Doc: https://axios.nuxtjs.org/usage
 import axios from 'axios'
 const instance = axios.create({
   timeout: 8000,
