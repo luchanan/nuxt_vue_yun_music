@@ -36,7 +36,9 @@ module.exports = {
   ** Plugins to load before mounting the App
   */
   plugins: [
-    { src: '~/plugins/vant.js' } // 默认ssr: true, ~可以用@代替
+    { src: '~/plugins/vant.js' }, // 默认ssr: true, ~可以用@代替
+    { src: '~/plugins/axios.js' },
+    { src: '~/plugins/icon-font/index.js' }
   ],
   /*
   ** Nuxt.js dev-modules

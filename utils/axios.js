@@ -1,5 +1,5 @@
 
-// nuxt集成了axios这里无法配置，待优化
+// nuxt集成了axios这里无需配置，待优化
 // Doc: https://axios.nuxtjs.org/usage
 import axios from 'axios'
 const instance = axios.create({
