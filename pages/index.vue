@@ -1,6 +1,9 @@
 <template>
   <div class="container">
-    <van-grid class="recomment" :gutter="10" :column-num="3">
+    <div class="img-font-title">
+      推荐歌曲<icon-font icon-class="arrow-right" />
+    </div>
+    <van-grid class="img-font-content" :gutter="10" :column-num="3">
       <van-grid-item v-for="(row, index) in personalizedList" :key="index">
         <div aspectratio class="recomment-img">
           <div aspectratio-content>
@@ -16,12 +19,11 @@
 </template>
 
 <script>
-import * as API from '~/api/request'
 export default {
-  async asyncData ({ req, res, error, params }) {
+  async asyncData ({ req, res, error, params, $axios }) {
     // https://zh.nuxtjs.org/guide/async-data/#asyncdata-%E6%96%B9%E6%B3%95
     try {
-      let personalized = await API.excute('personalized', { limit: 6 })
+      let personalized = await $axios.post('personalized', { limit: 6 })
       return {
         personalizedList: personalized.result
       }
@@ -33,9 +35,34 @@ export default {
 </script>
 
 <style lang="less">
-  .recomment {
+  @pading-left: 18px;
+  .img-font-title {
+    font-size: 50px;
+    padding: 60px 0 0 @pading-left;
+  }
+  .img-font-content {
+    padding: 0 0 100px @pading-left !important;
+    .van-grid-item {
+      &:nth-child(3n) {
+        padding-right: @pading-left !important;
+      }
+      padding-right: 12px !important;
+      margin-top: 50px;
+    }
+    img {
+      border-radius: 10px;
+    }
+    align-items: flex-start;
+    .van-grid-item__content--center {
+      align-items: flex-start;
+      padding: 0;
+      &:after {
+        border: none;
+      }
+    }
     .name {
       .lineClamp();
+      margin: 10px 0;
       font-size: 38px;
       color: @font-primary-color;
     }
