@@ -4,7 +4,7 @@
       推荐歌曲<icon-font icon-class="arrow-right" />
     </div>
     <van-grid class="img-font-content" :gutter="10" :column-num="3">
-      <van-grid-item v-for="(row, index) in personalizedList" :key="index">
+      <van-grid-item v-for="(row, index) in personalizedList" :key="index" class="img-font-items">
         <div aspectratio class="recomment-img">
           <div aspectratio-content>
             <img v-lazy="row.picUrl">
@@ -42,7 +42,7 @@ export default {
   }
   .img-font-content {
     padding: 0 0 100px @pading-left !important;
-    .van-grid-item {
+    .img-font-items {
       &:nth-child(3n) {
         padding-right: @pading-left !important;
       }

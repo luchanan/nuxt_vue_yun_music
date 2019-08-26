@@ -1,5 +1,5 @@
 const urlName = {
-  mLogin: '/login/phone',
+  mLogin: '/login/cellphone',
   personalized: '/personalized'
 }
 export default urlName

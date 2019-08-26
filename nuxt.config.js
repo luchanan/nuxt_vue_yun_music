@@ -99,6 +99,7 @@ module.exports = {
       plugins: {
         'postcss-aspect-ratio-mini': {},
         'postcss-px-to-viewport': {
+          selectorBlackList: ['van'], // 设置vant的样式不被转换
           viewportWidth: 1242
         }
       }
