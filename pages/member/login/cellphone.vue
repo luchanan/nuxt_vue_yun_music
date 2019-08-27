@@ -20,7 +20,6 @@
 </template>
 
 <script>
-import * as API from '~/api/request'
 export default {
   data () {
     return {
@@ -33,11 +32,10 @@ export default {
   },
   methods: {
     submit () {
-      API.excute('mLogin', {
-        phone: this.phone,
+      let account = 'phone'
+      this.$axios.post('mLogin', {
+        [account]: this.phone,
         password: this.password
-      }).then((res) => {
-        console.log(res)
       }).catch((res) => {
         this.$toast.fail(res.error.message)
       })
