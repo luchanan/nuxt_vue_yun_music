@@ -1,5 +1,5 @@
 
-// nuxt集成了axios这里无需配置，待优化
+// 废弃，使用nuxtjs/axios封装
 // Doc: https://axios.nuxtjs.org/usage
 import axios from 'axios'
 const instance = axios.create({
