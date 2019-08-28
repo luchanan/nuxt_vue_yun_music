@@ -4,7 +4,7 @@
       推荐歌曲<icon-font icon-class="arrow-right" />
     </div>
     <van-grid class="img-font-content" :gutter="10" :column-num="3">
-      <van-grid-item v-for="(row, index) in personalizedList" :key="index" class="img-font-items">
+      <van-grid-item v-for="(row, index) in recomment" :key="index" class="img-font-items">
         <div aspectratio class="recomment-img">
           <div aspectratio-content>
             <img v-lazy="row.picUrl">
@@ -23,9 +23,9 @@ export default {
   async asyncData ({ req, res, error, params, $axios }) {
     // https://zh.nuxtjs.org/guide/async-data/#asyncdata-%E6%96%B9%E6%B3%95
     try {
-      let personalized = await $axios.post('personalized', { limit: 6 })
+      let recomment = await $axios.post('personalized', { limit: 6 })
       return {
-        personalizedList: personalized.result
+        recomment: recomment.result
       }
     } catch (res) {
       error({ statusCode: params.statusCode, message: 'Post not found' })

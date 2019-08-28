@@ -32,8 +32,8 @@ export default {
   },
   methods: {
     submit () {
-      let account = 'phone'
-      this.$axios.post('mLogin', {
+      let account = 'email'
+      this.$axios.post('eLogin', {
         [account]: this.phone,
         password: this.password
       }).catch((res) => {
