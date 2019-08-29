@@ -32,10 +32,12 @@ export default {
   },
   methods: {
     submit () {
-      let account = 'email'
-      this.$axios.post('eLogin', {
+      let account = 'phone'
+      this.$axios.post('mLogin', {
         [account]: this.phone,
         password: this.password
+      }).then((res) => {
+        this.$router.push('/')
       }).catch((res) => {
         this.$toast.fail(res.error.message)
       })

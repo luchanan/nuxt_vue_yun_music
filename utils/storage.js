@@ -2,11 +2,26 @@ import Cookies from 'js-cookie'
 import { isNil } from 'lodash'
 const ls = process.client ? window.localStorage : {}
 const ss = process.client ? window.sessionStorage : {}
+const cookieparser = process.server ? require('cookieparser') : undefined
 function isEmpty (val) {
   if (isNil(val) || val === 'undefined' || val === '') {
     return true
   }
   return false
+}
+export const nuxtCookie = {
+  get (name, req) {
+    if (req && req.headers.cookie) {
+      try {
+        const parsed = cookieparser.parse(req.headers.cookie)
+        return parsed[name]
+      } catch (err) {
+        return null
+      }
+    } else {
+      return null
+    }
+  }
 }
 export const Cookie = {
   set (name, val, params = {}, validateEmpty = true) {

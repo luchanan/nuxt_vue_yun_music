@@ -1,18 +1,20 @@
+import { nuxtCookie } from '@/utils/storage'
 export const state = () => ({
-  authUser: null
+  token: ''
 })
 
 export const mutations = {
-  SET_USER (state, user) {
-    state.authUser = user
+  SET_TOKEN (state, token) {
+    state.token = token
   }
 }
 
 export const actions = {
   // nuxtServerInit is called by Nuxt.js before server-rendering every page
-  nuxtServerInit ({ commit }, { req }) {
-    if (req.session && req.session.authUser) {
-      commit('SET_USER', req.session.authUser)
+  nuxtServerInit ({ commit }, { req, context }) {
+    let token = nuxtCookie.get('__csrf', req)
+    if (token) {
+      commit('SET_TOKEN', token)
     }
   },
   async login ({ commit }, { username, password }) {

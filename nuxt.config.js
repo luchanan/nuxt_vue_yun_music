@@ -23,6 +23,7 @@ module.exports = {
   ** Global CSS
   */
   css: [
+    'flex.css', // node_modules
     '~/assets/less/base'
   ],
   // https://zh.nuxtjs.org/api/configuration-build/#styleresources

@@ -1,6 +1,8 @@
 const urlName = {
   mLogin: '/login/cellphone',
   eLogin: '/login',
-  personalized: '/personalized'
+  recommendsong: '/personalized',
+  newsong: '/personalized/newsong',
+  djprogram: '/personalized/djprogram'
 }
 export default urlName
