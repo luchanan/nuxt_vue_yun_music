@@ -13,7 +13,7 @@
     <ul>
       <li class="items">
         <div class="img-font-title">
-          推荐歌曲<icon-font icon-class="arrow-right" />
+          推荐歌曲<icon-font icon-class="arrow-right" svg />
         </div>
         <van-grid class="img-font-content" :column-num="3">
           <van-grid-item v-for="(row, index) in recomment" :key="index" class="img-font-items">
@@ -35,7 +35,7 @@
       </li>
       <li class="items">
         <div class="img-font-title">
-          最新音乐<icon-font icon-class="arrow-right" />
+          最新音乐<icon-font icon-class="arrow-right" svg />
         </div>
         <van-grid class="img-font-content" :column-num="3">
           <van-grid-item v-for="(row, index) in newsong" :key="index" class="img-font-items">
@@ -59,7 +59,7 @@
       </li>
       <li class="items">
         <div class="img-font-title">
-          主播电台<icon-font icon-class="arrow-right" />
+          主播电台<icon-font icon-class="arrow-right" svg />
         </div>
         <van-grid class="img-font-content" :column-num="3">
           <van-grid-item v-for="(row, index) in djprogram" :key="index" class="img-font-items">
@@ -136,6 +136,7 @@ export default {
   .img-font-title {
     font-size: 50px;
     padding: 60px 0 0 @pading-left;
+    vertical-align: middle;
   }
   .img-font-content {
     .play-num {

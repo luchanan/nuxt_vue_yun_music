@@ -34,6 +34,8 @@ export default {
       width: 70px;
       height: 70px;
       display: inline-block;
+      font-size: 0;
+      vertical-align: middle;
     }
     .svg-icon {
       width: 100%;
