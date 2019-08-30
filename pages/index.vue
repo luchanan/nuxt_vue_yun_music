@@ -1,5 +1,15 @@
 <template>
   <div>
+    <nav id="nav" class="van-hairline--bottom" flex="main:center cross:center box:mean">
+      <nuxt-link v-for="(row, index) in navData" :key="index" to="/" class="pointer align-center">
+        <div class="icon-warpper">
+          <icon-font :icon-class="row.icon" svg />
+        </div>
+        <div class="title">
+          {{ row.name }}
+        </div>
+      </nuxt-link>
+    </nav>
     <ul>
       <li class="items">
         <div class="img-font-title">
@@ -9,11 +19,12 @@
           <van-grid-item v-for="(row, index) in recomment" :key="index" class="img-font-items">
             <div aspectratio class="recomment-img">
               <div aspectratio-content>
-                <van-image class="img" :src="`${row.picUrl}?param=394y394`" lazy-load>
+                <van-image class="img mask" :src="`${row.picUrl}?param=394y394`" lazy-load>
                   <template v-slot:loading>
                     <van-loading type="spinner" size="20" />
                   </template>
                 </van-image>
+                <span class="play-num"><icon-font icon-class="earphone" />{{ row.playCount|formatPlayNum }}</span>
               </div>
             </div>
             <div class="name">
@@ -82,7 +93,14 @@ export default {
       return {
         recomment: recomment.result,
         newsong: newsong.result.slice(0, 6),
-        djprogram: djprogram.result
+        djprogram: djprogram.result,
+        // 静态数据
+        navData: [
+          { name: '私人FM', icon: 'radio' },
+          { name: '每日推荐', icon: 'date' },
+          { name: '歌单', icon: 'music' },
+          { name: '排行榜', icon: 'sort' }
+        ]
       }
     } catch (res) {
       error({ statusCode: params.statusCode, message: 'Post not found' })
@@ -93,11 +111,41 @@ export default {
 
 <style lang="less">
   @pading-left: 18px;
+  #nav {
+    padding: 50px 0;
+    .icon-warpper {
+      width: 170px;
+      height: 170px;
+      border-radius: 50%;
+      background: #fa5143;
+      display: inline-block;
+      position: relative;
+    }
+    .iconfont {
+      color: @font-white-color;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+    a, .title {
+      font-size: 38px;
+      color: @font-primary-color;
+    }
+  }
   .img-font-title {
     font-size: 50px;
     padding: 60px 0 0 @pading-left;
   }
   .img-font-content {
+    .play-num {
+      color: @font-white-color;
+      position:absolute;
+      right: 22px;
+      top: 10px;
+      z-index: 2;
+      font-size: 36px;
+    }
     padding: 0 0 100px @pading-left !important;
     .img-font-items {
       &:nth-child(3n) {
@@ -109,6 +157,16 @@ export default {
     .img {
       width: 100%;
       height: 100%;
+      &.mask:after {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 50px;
+        z-index: 2;
+        background-image: linear-gradient(to bottom,rgba(0,0,0,.2),transparent);
+      }
     }
     img {
       border-radius: 10px;

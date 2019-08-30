@@ -1,6 +1,6 @@
 <template>
-  <i class="icon-font">
-    <svg class="svg-icon" aria-hidden="true">
+  <i :class="`iconfont ${!svg ? 'icon' + iconClass : 'svg'}`">
+    <svg v-if="svg" class="svg-icon" aria-hidden="true">
       <use :xlink:href="iconName" />
     </svg>
   </i>
@@ -10,6 +10,10 @@
 export default {
   name: 'IconFont',
   props: {
+    svg: {
+      type: Boolean,
+      default: false
+    },
     iconClass: {
       type: String,
       required: true
@@ -23,11 +27,14 @@ export default {
 }
 </script>
 
-<style scoped lang="less">
-  .icon-font {
-    width: 70px;
-    height: 70px;
-    display: inline-block;
+<style lang="less">
+  @import "~/plugins/icon-font/iconfont.css";
+  .iconfont {
+    &.svg {
+      width: 70px;
+      height: 70px;
+      display: inline-block;
+    }
     .svg-icon {
       width: 100%;
       height: 100%;

@@ -29,7 +29,7 @@ module.exports = {
   // https://zh.nuxtjs.org/api/configuration-build/#styleresources
   styleResources: {
     less: [
-      './assets/less/variables.less',
+      './assets/less/variables.less', // 当具体页面用到的时候，不必每个页面都@import
       './assets/less/mixin.less'
     ]
   },
@@ -39,7 +39,8 @@ module.exports = {
   plugins: [
     { src: '~/plugins/vant.js' }, // 默认ssr: true, ~可以用@代替
     { src: '~/plugins/axios.js' },
-    { src: '~/plugins/icon-font/index.js' }
+    { src: '~/plugins/icon-font/index.js' },
+    { src: '~/plugins/filters.js' }
   ],
   /*
   ** Nuxt.js dev-modules
