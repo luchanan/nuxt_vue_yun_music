@@ -1,5 +1,15 @@
 <template>
   <div>
+    <div id="banner">
+      <div class="banner-warpper">
+        <van-swipe indicator-color="#fa5143">
+          <van-swipe-item v-for="(row, index) in banners" :key="index">
+            <img v-lazy="`${row.imageUrl}`">
+            <span :class="`type ${row.titleColor}`">{{ row.typeTitle }}</span>
+          </van-swipe-item>
+        </van-swipe>
+      </div>
+    </div>
     <nav id="nav" class="van-hairline--bottom" flex="main:center cross:center box:mean">
       <nuxt-link v-for="(row, index) in navData" :key="index" to="/" class="pointer align-center">
         <div class="icon-warpper">
@@ -19,7 +29,7 @@
           <van-grid-item v-for="(row, index) in recomment" :key="index" class="img-font-items">
             <div aspectratio class="recomment-img">
               <div aspectratio-content>
-                <van-image class="img mask" :src="`${row.picUrl}?param=394y394`" lazy-load>
+                <van-image class="img mask mask-top" :src="`${row.picUrl}?param=394y394`" lazy-load>
                   <template v-slot:loading>
                     <van-loading type="spinner" size="20" />
                   </template>
@@ -65,11 +75,12 @@
           <van-grid-item v-for="(row, index) in djprogram" :key="index" class="img-font-items">
             <div aspectratio class="recomment-img">
               <div aspectratio-content>
-                <van-image class="img" :src="`${row.picUrl}?param=394y394`" lazy-load>
+                <van-image class="img mask mask-bottom" :src="`${row.picUrl}?param=394y394`" lazy-load>
                   <template v-slot:loading>
                     <van-loading type="spinner" size="20" />
                   </template>
                 </van-image>
+                <span class="bottom-text">{{ row.copywriter }}</span>
               </div>
             </div>
             <div class="name">
@@ -87,10 +98,12 @@ export default {
   async asyncData ({ req, res, error, params, $axios }) {
     // https://zh.nuxtjs.org/guide/async-data/#asyncdata-%E6%96%B9%E6%B3%95
     try {
+      let { banners } = await $axios.post('banner')
       let recomment = await $axios.post('recommendsong', { limit: 6 })
       let newsong = await $axios.post('newsong')
       let djprogram = await $axios.post('djprogram')
       return {
+        banners,
         recomment: recomment.result,
         newsong: newsong.result.slice(0, 6),
         djprogram: djprogram.result,
@@ -111,13 +124,45 @@ export default {
 
 <style lang="less">
   @pading-left: 18px;
+  @border-radius-img: 18px;
+  #banner {
+    height: 468px;
+    background-color: @font-red-color;
+    background-clip: content-box;
+    padding: 0 0 105px 0;
+    .van-swipe-item {
+      font-size: 0;
+    }
+    .banner-warpper {
+      padding: 0 18px;
+      img {
+        border-radius: @border-radius-img;
+      }
+      .type {
+        border-radius: @border-radius-img  0;
+        color: @font-white-color;
+        position:absolute;
+        right: 0;
+        bottom: 0;
+        font-size: 36px;
+        padding: 10px 32px;
+        display: inline-block;
+        &.blue {
+          background: #69bbe8;
+        }
+        &.red {
+          background: @font-red-color;
+        }
+      }
+    }
+  }
   #nav {
     padding: 50px 0;
     .icon-warpper {
       width: 170px;
       height: 170px;
       border-radius: 50%;
-      background: #fa5143;
+      background: @font-red-color;
       display: inline-block;
       position: relative;
     }
@@ -147,6 +192,15 @@ export default {
       z-index: 2;
       font-size: 36px;
     }
+    .bottom-text {
+      position:absolute;
+      left: 0;
+      bottom: 0;
+      font-size: 38px;
+      color: @font-white-color;
+      margin: 20px 14px;
+      .lineClamp(1);
+    }
     padding: 0 0 100px @pading-left !important;
     .img-font-items {
       &:nth-child(3n) {
@@ -158,19 +212,27 @@ export default {
     .img {
       width: 100%;
       height: 100%;
-      &.mask:after {
-        content: "";
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 50px;
-        z-index: 2;
-        background-image: linear-gradient(to bottom,rgba(0,0,0,.2),transparent);
+      &.mask {
+        &:after {
+          content: "";
+          position: absolute;
+          left: 0;
+          width: 100%;
+          height: 80px;
+          z-index: 2;
+        }
+        &.mask-top::after {
+          top: 0;
+          background-image: linear-gradient(to bottom,rgba(0,0,0,.2),transparent);
+        }
+        &.mask-bottom::after {
+          bottom: 0;
+          background-image: linear-gradient(to top,rgba(0,0,0,.2),transparent);
+        }
       }
     }
     img {
-      border-radius: 10px;
+      border-radius: @border-radius-img;
     }
     align-items: flex-start;
     .van-grid-item__content--center {

@@ -1,4 +1,5 @@
 import { nuxtCookie } from '@/utils/storage'
+// import * as tools from '@/utils/tools'
 export const state = () => ({
   token: ''
 })
@@ -11,10 +12,12 @@ export const mutations = {
 
 export const actions = {
   // nuxtServerInit is called by Nuxt.js before server-rendering every page
-  nuxtServerInit ({ commit }, { req, context }) {
+  nuxtServerInit ({ commit }, { req, context, redirect }) {
     let token = nuxtCookie.get('__csrf', req)
     if (token) {
       commit('SET_TOKEN', token)
+    } else {
+      redirect('/member/login/cellphone')
     }
   },
   async login ({ commit }, { username, password }) {
