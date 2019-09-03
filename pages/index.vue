@@ -11,7 +11,7 @@
       </div>
     </div>
     <nav id="nav" class="van-hairline--bottom" flex="main:center cross:center box:mean">
-      <nuxt-link v-for="(row, index) in navData" :key="index" to="/" class="pointer align-center">
+      <nuxt-link v-for="(row, index) in navData" :key="index" to="/" class="align-center">
         <div class="icon-warpper">
           <icon-font :icon-class="row.icon" svg />
         </div>
@@ -27,7 +27,7 @@
         </div>
         <van-grid class="img-font-content" :column-num="3">
           <van-grid-item v-for="(row, index) in recomment" :key="index" class="img-font-items">
-            <div aspectratio class="recomment-img">
+            <div aspectratio>
               <div aspectratio-content>
                 <van-image class="img mask mask-top" :src="`${row.picUrl}?param=394y394`" lazy-load>
                   <template v-slot:loading>
@@ -49,7 +49,7 @@
         </div>
         <van-grid class="img-font-content" :column-num="3">
           <van-grid-item v-for="(row, index) in newsong" :key="index" class="img-font-items">
-            <div aspectratio class="recomment-img">
+            <div aspectratio>
               <div aspectratio-content>
                 <van-image class="img" :src="`${row.song.album.picUrl}?param=394y394`" lazy-load>
                   <template v-slot:loading>
@@ -73,7 +73,7 @@
         </div>
         <van-grid class="img-font-content" :column-num="3">
           <van-grid-item v-for="(row, index) in djprogram" :key="index" class="img-font-items">
-            <div aspectratio class="recomment-img">
+            <div aspectratio>
               <div aspectratio-content>
                 <van-image class="img mask mask-bottom" :src="`${row.picUrl}?param=394y394`" lazy-load>
                   <template v-slot:loading>
@@ -252,7 +252,7 @@ export default {
       font-size: 38px;
       color: @font-primary-color;
     }
-    .recomment-img {
+    [aspectratio] {
       aspect-ratio: '394:394';
     }
   }
