@@ -1,8 +1,11 @@
+// 服务端使用nuxtVCookie， 客户端使用js-cookie
 import Cookies from 'js-cookie'
 import { isNil } from 'lodash'
 const ls = process.client ? window.localStorage : {}
 const ss = process.client ? window.sessionStorage : {}
 const cookieparser = process.server ? require('cookieparser') : undefined
+let prefixName = '__'
+let _PREFIX = process.client ? window._PREFIX || prefixName : prefixName
 function isEmpty (val) {
   if (isNil(val) || val === 'undefined' || val === '') {
     return true
@@ -14,7 +17,7 @@ export const nuxtCookie = {
     if (req && req.headers.cookie) {
       try {
         const parsed = cookieparser.parse(req.headers.cookie)
-        return parsed[name]
+        return parsed[_PREFIX + name]
       } catch (err) {
         return null
       }
@@ -28,13 +31,17 @@ export const Cookie = {
     if (validateEmpty && isEmpty(val)) {
       return
     }
-    Cookies.set(window._PREFIX + name, JSON.stringify(val), params)
+    Cookies.set(_PREFIX + name, JSON.stringify(val), params)
   },
-  get (name) {
-    return Cookies.get(window._PREFIX + name)
+  get (name, params) {
+    if (process.client) {
+      return Cookies.get(_PREFIX + name)
+    } else {
+      return nuxtCookie.get(name, params.req || params)
+    }
   },
   remove (name, params = {}) {
-    Cookies.remove(window._PREFIX + name, params)
+    Cookies.remove(_PREFIX + name, params)
   }
 }
 export const Local = {
@@ -42,13 +49,13 @@ export const Local = {
     if (isEmpty(val)) {
       return
     }
-    ls.setItem(window._PREFIX + name, val)
+    ls.setItem(_PREFIX + name, val)
   },
   get (name) {
-    return ls.getItem(window._PREFIX + name)
+    return ls.getItem(_PREFIX + name)
   },
   remove (name) {
-    ls.removeItem(window._PREFIX + name)
+    ls.removeItem(_PREFIX + name)
   }
 }
 export const Session = {
@@ -56,12 +63,12 @@ export const Session = {
     if (isEmpty(val)) {
       return
     }
-    ss.setItem(window._PREFIX + name, val)
+    ss.setItem(_PREFIX + name, val)
   },
   get (name) {
-    return ss.getItem(window._PREFIX + name)
+    return ss.getItem(_PREFIX + name)
   },
   remove (name) {
-    ss.removeItem(window._PREFIX + name)
+    ss.removeItem(_PREFIX + name)
   }
 }

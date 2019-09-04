@@ -20,6 +20,7 @@
 </template>
 
 <script>
+import { Cookie } from '@/utils/storage'
 export default {
   data () {
     return {
@@ -37,6 +38,7 @@ export default {
         [account]: this.phone,
         password: this.password
       }).then((res) => {
+        Cookie.set('userId', res.account.id)
         this.$router.push('/')
       }).catch((res) => {
         this.$toast.fail(res.error.message)

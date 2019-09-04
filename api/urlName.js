@@ -5,6 +5,7 @@ const urlName = {
   recommendsong: '/personalized',
   newsong: '/personalized/newsong',
   djprogram: '/personalized/djprogram',
-  userSubcount: '/user/subcount'
+  userSubcount: '/user/subcount',
+  userPlaylist: '/user/playlist'
 }
 export default urlName

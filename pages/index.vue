@@ -4,8 +4,10 @@
       <div class="banner-warpper">
         <van-swipe indicator-color="#fa5143">
           <van-swipe-item v-for="(row, index) in banners" :key="index">
-            <img v-lazy="`${row.imageUrl}`">
-            <span :class="`type ${row.titleColor}`">{{ row.typeTitle }}</span>
+            <div class="inner">
+              <img v-lazy="`${row.imageUrl}`" style="width:100%">
+              <span :class="`type ${row.titleColor}`">{{ row.typeTitle }}</span>
+            </div>
           </van-swipe-item>
         </van-swipe>
       </div>
@@ -133,8 +135,10 @@ export default {
     .van-swipe-item {
       font-size: 0;
     }
-    .banner-warpper {
+    .inner {
       padding: 0 18px;
+    }
+    .banner-warpper {
       img {
         border-radius: @border-radius-img;
       }
@@ -142,7 +146,7 @@ export default {
         border-radius: @border-radius-img  0;
         color: @font-white-color;
         position:absolute;
-        right: 0;
+        right: 18px;
         bottom: 0;
         font-size: 36px;
         padding: 10px 32px;
