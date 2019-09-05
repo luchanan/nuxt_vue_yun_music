@@ -5,7 +5,7 @@
         <van-swipe indicator-color="#fa5143">
           <van-swipe-item v-for="(row, index) in banners" :key="index">
             <div class="inner">
-              <img v-lazy="`${row.imageUrl}`" style="width:100%">
+              <img v-lazy="`${row.imageUrl}`">
               <span :class="`type ${row.titleColor}`">{{ row.typeTitle }}</span>
             </div>
           </van-swipe-item>
@@ -16,6 +16,7 @@
       <nuxt-link v-for="(row, index) in navData" :key="index" to="/" class="align-center">
         <div class="icon-warpper">
           <icon-font :icon-class="row.icon" svg />
+          <span v-if="row.icon == 'date'" class="day">{{ new Date().getDate() }}</span>
         </div>
         <div class="title">
           {{ row.name }}
@@ -82,11 +83,11 @@
                     <van-loading type="spinner" size="20" />
                   </template>
                 </van-image>
-                <span class="bottom-text">{{ row.copywriter }}</span>
+                <span class="bottom-text">{{ row.name }}</span>
               </div>
             </div>
             <div class="name">
-              {{ row.name }}
+              {{ row.rcmdtext }}
             </div>
           </van-grid-item>
         </van-grid>
@@ -103,12 +104,12 @@ export default {
       let { banners } = await $axios.post('banner')
       let recomment = await $axios.post('recommendsong', { limit: 6 })
       let newsong = await $axios.post('newsong')
-      let djprogram = await $axios.post('djprogram')
+      let djprogram = await $axios.post('djhot', { limit: 6 })
       return {
         banners,
         recomment: recomment.result,
         newsong: newsong.result.slice(0, 6),
-        djprogram: djprogram.result,
+        djprogram: djprogram.djRadios,
         // 静态数据
         navData: [
           { name: '私人FM', icon: 'radio' },
@@ -169,6 +170,12 @@ export default {
       background: @font-red-color;
       display: inline-block;
       position: relative;
+      .day {
+        color: @font-white-color;
+        font-size: 36px;
+        margin-top: 72px;
+        display: inline-block;
+      }
     }
     .iconfont {
       color: @font-white-color;
@@ -176,10 +183,15 @@ export default {
       left: 50%;
       top: 50%;
       transform: translate(-50%, -50%);
+      width: 82px;
+      height: 82px;
     }
     a, .title {
       font-size: 38px;
       color: @font-primary-color;
+    }
+    .title {
+      margin-top: 20px;
     }
   }
   .img-font-title {

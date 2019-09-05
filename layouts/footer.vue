@@ -1,18 +1,21 @@
 <template>
-  <footer class="footer van-hairline--top" flex="main:center box:mean">
-    <nuxt-link v-for="(row, index) in footNav" :key="index" :to="row.path" flex="main:center">
-      <div class="items">
-        <icon-font :icon-class="row.icon" svg />
-        <div class="title">
-          {{ row.name }}
-        </div>
+  <van-tabbar route class="footer" active-color="#fa5143" inactive-color="#969696">
+    <van-tabbar-item v-for="(row, index) in footNav" :key="index" :to="row.path">
+      <icon-font slot="icon" slot-scope="props" :icon-class="row.icon" :class="props.active ? 'active' : 'inactive'" svg />
+      <div class="title">
+        {{ row.name }}
       </div>
-    </nuxt-link>
-  </footer>
+    </van-tabbar-item>
+  </van-tabbar>
 </template>
 
 <script>
+import { Tabbar, TabbarItem } from 'vant'
 export default {
+  components: {
+    'van-tabbar': Tabbar,
+    'van-tabbar-item': TabbarItem
+  },
   data () {
     return {
       footNav: [
@@ -28,26 +31,20 @@ export default {
 </script>
 <style lang="less">
   .footer {
-    position: fixed !important;
-    bottom: 0;
-    left: 0;
     right: 0;
-    background: @font-white-color;
-    z-index: 3;
     padding: 18px 0 10px 0;
-    a {
-      color: #969696;
-      font-size: 30px;
-      &.nuxt-link-exact-active {
-        color: @font-red-color;
-      }
-    }
+    height: @footer-height !important;
+    z-index: 3 !important;
     .iconfont {
       width: 65px;
       height: 65px;
     }
     .title {
-      margin-top: 6px;
+      margin-top: 18px;
+      font-size: 30px;
+    }
+    .van-tabbar-item__icon {
+      margin-bottom: 0;
     }
   }
 </style>

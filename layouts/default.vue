@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div :class="layoutClass">
     <nuxt />
     <Footer />
   </div>
@@ -7,8 +7,26 @@
 <script>
 import Footer from './footer'
 export default {
-  components: { Footer }
+  components: { Footer },
+  data () {
+    return {
+      hasFooter: true
+    }
+  },
+  computed: {
+    layoutClass () {
+      return {
+        app: true,
+        'has_footer': this.hasFooter
+      }
+    }
+  }
 }
 </script>
-<style>
-</style>
+<style lang="less">
+  .app {
+    &.has_footer {
+      padding-bottom: @footer-height;
+    }
+  }
+</style>>

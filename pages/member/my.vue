@@ -129,10 +129,10 @@ export default {
       // 歌单
       let createList = playlist.filter(items => items.subscribed === false)
       data.playlist[0].list = createList
-      data.playlist[0].name = tools.stringFormat(data.playlist[0].name, createList.length)
+      data.playlist[0].name = tools.stringFormat(data.playlist[0].name, counts.createdPlaylistCount + 1) // + 1 为了加上“我喜欢的音乐”， 这个歌单是不能删除的
       let collectList = playlist.filter(items => items.subscribed === true)
       data.playlist[1].list = collectList
-      data.playlist[1].name = tools.stringFormat(data.playlist[1].name, collectList.length)
+      data.playlist[1].name = tools.stringFormat(data.playlist[1].name, counts.subPlaylistCount)
       return data
     } catch (res) {
       return data
@@ -217,10 +217,7 @@ export default {
           padding: 0;
         }
         .cells {
-          padding: 18px 20px 0 20px;
-          &:last-child {
-            padding-bottom: 18px;
-          }
+          padding: 9px 20px 9px 20px;
         }
       }
       .img {
