@@ -226,8 +226,6 @@ export default {
       margin-top: 50px;
     }
     .img {
-      width: 100%;
-      height: 100%;
       &.mask {
         &:after {
           content: "";

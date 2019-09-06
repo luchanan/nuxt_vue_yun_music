@@ -2,8 +2,8 @@
   <div class="my">
     <div class="van-hairline--bottom shortcut" flex="cross:center">
       <div v-for="(items, index) in shortcut" :key="index" class="align-center">
-        <div class="img" aspectratio>
-          <div aspectratio-content>
+        <div aspectratio>
+          <div class="img_wrapper" aspectratio-content>
             <van-image class="img" :src="`${items.img}`" lazy-load>
               <template v-slot:loading>
                 <van-loading type="spinner" size="20" />
@@ -45,7 +45,7 @@
           <van-cell v-for="(items, each) in row.list" :key="each" class="cells" is-link>
             <template slot="title">
               <div flex="main:center cross:center box:first">
-                <div class="img" aspectratio>
+                <div class="img_wrapper" aspectratio>
                   <div aspectratio-content>
                     <van-image class="img" :src="`${items.coverImgUrl}`" lazy-load>
                       <template v-slot:loading>
@@ -148,7 +148,7 @@ export default {
         padding: 0 60px;
       }
       padding: 60px 0;
-      .img {
+      .img_wrapper {
         width: 122px;
         height: 122px;
         margin: 0 auto;
@@ -220,9 +220,9 @@ export default {
           padding: 9px 20px 9px 20px;
         }
       }
-      .img {
-        width: 162px !important;
-        height: 162px !important;
+      .img_wrapper {
+        width: 162px;
+        height: 162px;
         img {
           border-radius: 18px;
         }
