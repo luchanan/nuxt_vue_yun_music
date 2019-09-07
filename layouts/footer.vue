@@ -21,7 +21,7 @@ export default {
       footNav: [
         { name: '发现', icon: 'find', path: '/' },
         { name: '视频', icon: 'video', path: '/video' },
-        { name: '我的', icon: 'my_music', path: '/member/my' },
+        { name: '我的', icon: 'my_music', path: '/my' },
         { name: '朋友', icon: 'friend', path: '/friend' },
         { name: '帐号', icon: 'account', path: '/account' }
       ]
