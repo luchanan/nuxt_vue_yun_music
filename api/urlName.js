@@ -13,6 +13,8 @@ const urlName = {
   eLogin: '/login',
   // 我的
   userSubcount: '/user/subcount',
-  userPlaylist: '/user/playlist'
+  userPlaylist: '/user/playlist',
+  // 帐号
+  userDetail: 'user/detail'
 }
 export default urlName

@@ -2,14 +2,17 @@
   <div class="account">
     <section class="summary van-hairline--top-bottom" flex="cross:center box:justify">
       <div class="avatar">
-        <img>
+        <van-image
+          round
+          :src="userDetail.profile.avatarUrl"
+        />
       </div>
       <div>
         <p class="nick_name">
-          无尽
+          {{ userDetail.profile.nickname }}
         </p>
         <div class="level">
-          <span class=" align-center">9</span>
+          <span class=" align-center">lv.{{ userDetail.level }}</span>
         </div>
       </div>
       <div class="align-center sign">
@@ -33,7 +36,7 @@
             关注
           </p>
           <p class="number">
-            0
+            {{ userDetail.profile.follows }}
           </p>
         </div>
       </li>
@@ -47,8 +50,9 @@
           </p>
         </div>
       </li>
-      <li>
+      <li class="edit">
         <div>
+          <icon-font icon-class="pencil" />
           <p class="title">
             我的资料
           </p>
@@ -69,7 +73,9 @@
           :value="child.value"
         >
           <template slot="title">
-            <span class="title"><icon-font class="left-icon" :icon-class="child.icon" />{{ child.title }}</span>
+            <div class="title">
+              <icon-font class="left-icon" :icon-class="child.icon" />{{ child.title }}
+            </div>
           </template>
           <icon-font
             slot="right-icon"
@@ -83,6 +89,7 @@
 </template>
 
 <script>
+import { Cookie } from '@/utils/storage'
 export default {
   data () {
     return {
@@ -114,6 +121,17 @@ export default {
       ]
     }
   },
+  async asyncData ({ req, res, error, params, $axios }) {
+    // https://zh.nuxtjs.org/guide/async-data/#asyncdata-%E6%96%B9%E6%B3%95
+    try {
+      let userDetail = await $axios.post('userDetail', { uid: Cookie.get('userId', req) })
+      return {
+        userDetail
+      }
+    } catch (res) {
+      error({ statusCode: params.statusCode, message: 'Post not found' })
+    }
+  },
   methods: {
   }
 }
@@ -127,10 +145,6 @@ export default {
         width: 182px;
         height: 182px;
         margin-right: 34px;
-        img {
-          width: 100%;
-          height: 100%;
-        }
       }
       .nick_name {
         font-size: 50px;
@@ -149,7 +163,7 @@ export default {
         }
       }
       .sign {
-        border-radius: 40px;
+        border-radius: 60px;
         font-size: 30px;
         color: #ff0000;
         border: solid 1px #ff0000;
@@ -168,6 +182,14 @@ export default {
         .number {
           font-size: 38px;
           color: @font-primary-color;
+        }
+        &.edit {
+          .iconfont {
+            font-size: 50px;
+          }
+          .title {
+            margin-bottom: 0;
+          }
         }
       }
     }
