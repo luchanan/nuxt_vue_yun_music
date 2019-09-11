@@ -11,6 +11,7 @@ const urlName = {
   // 登录
   mLogin: '/login/cellphone',
   eLogin: '/login',
+  logout: '/logout',
   // 我的
   userSubcount: '/user/subcount',
   userPlaylist: '/user/playlist',

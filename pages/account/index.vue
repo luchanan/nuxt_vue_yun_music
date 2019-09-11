@@ -71,6 +71,7 @@
           value-class="desc"
           title-class="title"
           :value="child.value"
+          @click="itemClick(child.click)"
         >
           <template slot="title">
             <div class="title">
@@ -116,7 +117,7 @@ export default {
           { title: '分享网易云音乐', icon: 'share', value: '' },
           { title: '关于', icon: 'about', value: '' }
         ],
-        [{ title: '退出登录', icon: '', value: '', class: 'sign_out' }],
+        [{ title: '退出登录', icon: '', value: '', class: 'sign_out', click: this.signOut }],
         [{ title: '', icon: '', value: '', class: 'hide' }]
       ]
     }
@@ -133,6 +134,21 @@ export default {
     }
   },
   methods: {
+    itemClick (val) {
+      if (typeof val === 'function') { val() }
+    },
+    signOut () {
+      this.$dialog.confirm({
+        title: '网易云音乐',
+        message: '确定退出当帐号吗？'
+      }).then(() => {
+        this.$axios.post('logout').then((res) => {
+          console.log(res)
+          this.$router.push('/')
+        })
+      }).catch(() => {
+      })
+    }
   }
 }
 </script>
