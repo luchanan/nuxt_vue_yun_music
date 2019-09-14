@@ -17,7 +17,7 @@ export const actions = {
     if (token) {
       commit('SET_TOKEN', token)
     } else {
-      redirect('/member/login/cellphone')
+      redirect('/login')
     }
   },
   async login ({ commit }, { username, password }) {
