@@ -11,6 +11,7 @@
           size="large"
           hairline
           type="primary"
+          @click="$router.push('/login/cellphone')"
         >
           手机号登录
         </van-button>
@@ -64,6 +65,9 @@
 
 <script>
 export default {
+  page: {
+    footer: false // 配置页面信息
+  },
   data () {
     return {
     }
@@ -99,6 +103,7 @@ export default {
       text-align: center;
       margin: 80px 0 460px 0;
       text-decoration: underline;
+      text-underline-position: under;
     }
     .icons {
       .icon_warpper {

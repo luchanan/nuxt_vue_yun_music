@@ -1,7 +1,7 @@
 <template>
   <div :class="layoutClass">
     <nuxt />
-    <Footer />
+    <Footer v-if="page.footer" />
   </div>
 </template>
 <script>
@@ -10,14 +10,22 @@ export default {
   components: { Footer },
   data () {
     return {
-      hasFooter: true
     }
   },
   computed: {
+    page () {
+      let defaultParams = {
+        footer: true
+      }
+      let params = this.$route.matched.map((r) => {
+        return (r.components.default.options ? r.components.default.options.page : r.components.default.page)
+      })[0]
+      return { ...defaultParams, ...params }
+    },
     layoutClass () {
       return {
         app: true,
-        'has_footer': this.hasFooter
+        'has_footer': this.page.footer
       }
     }
   }
