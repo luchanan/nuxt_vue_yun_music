@@ -29,7 +29,7 @@
           推荐歌曲<icon-font icon-class="arrow-right" svg />
         </div>
         <van-grid :border="false" class="img-font-content" :column-num="3">
-          <van-grid-item v-for="(row, index) in recomment" :key="index" class="img-font-items">
+          <van-grid-item v-for="(row, index) in recomment" :key="index" class="img-font-items" @click="$router.push({path: 'play/detail', query: {id: row.id}})">
             <div aspectratio>
               <div aspectratio-content>
                 <van-image class="img mask mask-top" :src="`${row.picUrl}?param=394y394`" lazy-load>
@@ -198,76 +198,5 @@ export default {
     font-size: 50px;
     padding: 60px 0 0 @pading-left;
     vertical-align: middle;
-  }
-  .img-font-content {
-    .play-num {
-      color: @font-white-color;
-      position:absolute;
-      right: 22px;
-      top: 10px;
-      z-index: 2;
-      font-size: 36px;
-    }
-    .bottom-text {
-      position:absolute;
-      left: 0;
-      bottom: 0;
-      font-size: 38px;
-      color: @font-white-color;
-      margin: 20px 14px;
-      .lineClamp(1);
-    }
-    padding: 0 0 100px @pading-left !important;
-    .img-font-items {
-      &:nth-child(3n) {
-        padding-right: @pading-left !important;
-      }
-      padding-right: 12px !important;
-      margin-top: 50px;
-    }
-    .img {
-      &.mask {
-        &:after {
-          content: "";
-          position: absolute;
-          left: 0;
-          width: 100%;
-          height: 80px;
-          z-index: 2;
-        }
-        &.mask-top::after {
-          top: 0;
-          background-image: linear-gradient(to bottom,rgba(0,0,0,.2),transparent);
-        }
-        &.mask-bottom::after {
-          bottom: 0;
-          background-image: linear-gradient(to top,rgba(0,0,0,.2),transparent);
-        }
-      }
-    }
-    img {
-      border-radius: @border-radius-img;
-    }
-    align-items: flex-start;
-    .van-grid-item__content--center {
-      align-items: flex-start;
-      padding: 0;
-      &:after {
-        border: none;
-      }
-    }
-    .auth-name {
-      font-size: 36px;
-      color: @font-secondary-color;
-    }
-    .name {
-      .lineClamp();
-      margin: 10px 0;
-      font-size: 38px;
-      color: @font-primary-color;
-    }
-    [aspectratio] {
-      aspect-ratio: '394:394';
-    }
   }
 </style>
