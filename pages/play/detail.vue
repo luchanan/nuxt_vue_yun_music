@@ -25,19 +25,19 @@
       </div>
       <div class="icons" flex="cross:center main:justify">
         <a flex-box="1" href="" class="align-center">
-          <div><icon-font icon-class="earphone" svg /></div>
+          <div><icon-font icon-class="comment" svg /></div>
           <p>{{ playlist.commentCount }}</p>
         </a>
         <a flex-box="1" href="" class="align-center">
-          <div><icon-font icon-class="earphone" svg /></div>
+          <div><icon-font icon-class="share" svg /></div>
           <p>{{ playlist.shareCount }}</p>
         </a>
         <a flex-box="1" href="" class="align-center">
-          <div><icon-font icon-class="earphone" svg /></div>
+          <div><icon-font icon-class="download" svg /></div>
           <p>下载</p>
         </a>
         <a flex-box="1" href="" class="align-center">
-          <div><icon-font icon-class="earphone" svg /></div>
+          <div><icon-font icon-class="checkbox" svg /></div>
           <p>多选</p>
         </a>
       </div>

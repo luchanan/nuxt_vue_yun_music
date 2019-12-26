@@ -35,7 +35,7 @@ export function url (url, config = {}) {
     domain: '/'
   }
   let mergeConfigParams = { ...defaultConfigParams, ...config }
-  return mergeConfigParams.domain + mergeConfigParams.dir + url
+  return `${mergeConfigParams.domain}${mergeConfigParams.dir}${url}`
 }
 // api调用
 export function excute (name, data, config = {}) {
