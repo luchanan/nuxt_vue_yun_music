@@ -24,7 +24,7 @@
           />
         </van-field>
       </van-cell-group>
-      <van-button round type="danger" size="large" :loading="loading" @click="submit">
+      <van-button :loading="loading" @click="submit" round type="danger" size="large">
         登录
       </van-button>
       <div class="underline_gray">

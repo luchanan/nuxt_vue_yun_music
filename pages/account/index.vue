@@ -3,8 +3,8 @@
     <section class="summary van-hairline--top-bottom" flex="cross:center box:justify">
       <div class="avatar">
         <van-image
-          round
           :src="userDetail.profile.avatarUrl"
+          round
         />
       </div>
       <div>
@@ -68,14 +68,14 @@
           v-for="(child, childIndex) in row"
           :key="childIndex"
           :class="`${child.class ? child.class : ''}`"
-          value-class="desc"
-          title-class="title"
           :value="child.value"
           @click="itemClick(child.click)"
+          value-class="desc"
+          title-class="title"
         >
           <template slot="title">
             <div class="title">
-              <icon-font class="left-icon" :icon-class="child.icon" />{{ child.title }}
+              <icon-font :icon-class="child.icon" class="left-icon" />{{ child.title }}
             </div>
           </template>
           <icon-font
@@ -241,7 +241,7 @@ export default {
       & > div > div:first-child {
         padding: 0;
         height: 30px;
-        background: #eeefff0;
+        background: #eeefff;
       }
       .group_content {
         & > div {

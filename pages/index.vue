@@ -28,11 +28,11 @@
         <div class="img-font-title">
           推荐歌曲<icon-font icon-class="arrow-right" svg />
         </div>
-        <van-grid :border="false" class="img-font-content" :column-num="3">
-          <van-grid-item v-for="(row, index) in recomment" :key="index" class="img-font-items" @click="$router.push({path: 'play/detail', query: {id: row.id}})">
+        <van-grid :border="false" :column-num="3" class="img-font-content">
+          <van-grid-item v-for="(row, index) in recomment" :key="index" @click="$router.push({path: 'play/detail', query: {id: row.id}})" class="img-font-items">
             <div aspectratio>
               <div aspectratio-content>
-                <van-image class="img mask mask-top" :src="`${row.picUrl}?param=394y394`" lazy-load>
+                <van-image :src="`${row.picUrl}?param=394y394`" class="img mask mask-top" lazy-load>
                   <template v-slot:loading>
                     <van-loading type="spinner" size="20" />
                   </template>
@@ -50,11 +50,11 @@
         <div class="img-font-title">
           最新音乐<icon-font icon-class="arrow-right" svg />
         </div>
-        <van-grid :border="false" class="img-font-content" :column-num="3">
+        <van-grid :border="false" :column-num="3" class="img-font-content">
           <van-grid-item v-for="(row, index) in newsong" :key="index" class="img-font-items">
             <div aspectratio>
               <div aspectratio-content>
-                <van-image class="img" :src="`${row.song.album.picUrl}?param=394y394`" lazy-load>
+                <van-image :src="`${row.song.album.picUrl}?param=394y394`" class="img" lazy-load>
                   <template v-slot:loading>
                     <van-loading type="spinner" size="20" />
                   </template>
@@ -74,11 +74,11 @@
         <div class="img-font-title">
           主播电台<icon-font icon-class="arrow-right" svg />
         </div>
-        <van-grid :border="false" class="img-font-content" :column-num="3">
+        <van-grid :border="false" :column-num="3" class="img-font-content">
           <van-grid-item v-for="(row, index) in djprogram" :key="index" class="img-font-items">
             <div aspectratio>
               <div aspectratio-content>
-                <van-image class="img mask mask-bottom" :src="`${row.picUrl}?param=394y394`" lazy-load>
+                <van-image :src="`${row.picUrl}?param=394y394`" class="img mask mask-bottom" lazy-load>
                   <template v-slot:loading>
                     <van-loading type="spinner" size="20" />
                   </template>

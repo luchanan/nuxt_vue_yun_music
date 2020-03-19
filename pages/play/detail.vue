@@ -1,12 +1,12 @@
 <template>
   <div class="playlist_detail">
     <section class="top" flex="cross:center main:justify dir:top">
-      <div class="bg" :style="{backgroundImage:`url(${playlist.coverImgUrl}?param=170y170)`}" />
+      <div :style="{backgroundImage:`url(${playlist.coverImgUrl}?param=170y170)`}" class="bg" />
       <div flex="cross:center box:first" class="summary">
         <div class="img-font-content">
           <div aspectratio>
             <div aspectratio-content>
-              <van-image class="img mask mask-top" :src="playlist.coverImgUrl" lazy-load>
+              <van-image :src="playlist.coverImgUrl" class="img mask mask-top" lazy-load>
                 <template v-slot:loading>
                   <van-loading type="spinner" size="20" />
                 </template>
@@ -42,6 +42,57 @@
         </a>
       </div>
     </section>
+    <div class="play_list">
+      <van-cell
+        class="header"
+        flex="cross:center"
+      >
+        <template slot="title">
+          <div class="title">
+            <van-icon class="play" name="play-circle-o" /><span class="name">播放全部</span><span class="songs gray">(共56首)</span>
+          </div>
+        </template>
+        <div class="collect">
+          <van-icon name="plus" />收藏(54557878)
+        </div>
+      </van-cell>
+      <van-cell
+        class="list"
+        flex="cross:center"
+      >
+        <template slot="title">
+          <div class="title">
+            <div class="name">
+              李香兰
+            </div>
+            <div class="memo">
+              周星驰
+            </div>
+          </div>
+        </template>
+        <div>
+          <van-icon class="icons" name="ellipsis" />
+        </div>
+      </van-cell>
+      <van-cell
+        class="list"
+        flex="cross:center"
+      >
+        <template slot="title">
+          <div class="title">
+            <div class="name">
+              李香兰<span class="gray">(共56首)</span>
+            </div>
+            <div class="memo gray">
+              周星驰
+            </div>
+          </div>
+        </template>
+        <div>
+          <van-icon class="icons" name="ellipsis" />
+        </div>
+      </van-cell>
+    </div>
   </div>
 </template>
 
@@ -53,8 +104,7 @@ export default {
     }
   },
   async asyncData ({ req, res, error, params, $axios, query }) {
-    let { playlist } = await $axios.post('playlistDetail', { id: query.id })
-    console.log(playlist.coverImgUrl)
+    let { playlist } = await $axios.get('playlistDetail', { params: { id: query.id, timeStamp: +new Date() } })
     return {
       playlist
     }
@@ -143,5 +193,50 @@ export default {
       padding: 0 !important;
     }
 
+  }
+  @padding-top-bottom: 43px;
+  .play_list {
+    .gray {
+      color: #979798;
+    }
+    border-top-right-radius: 30px;
+    border-top-left-radius: 30px;
+    .header {
+      line-height: normal;
+      padding: 0;
+      .collect {
+        padding: @padding-top-bottom + 4px 30px @padding-top-bottom + 4px 30px;
+        font-size: 40px;
+        color: #ffffff;
+        background-color: @font-red-color;
+        display: inline-block;
+      }
+      .play {
+        font-size: 62px;
+        margin: 0 31px 0 0;
+        vertical-align: text-bottom;
+      }
+      .title {
+        padding: @padding-top-bottom 0 @padding-top-bottom 30px;
+        .songs {
+          font-size: 44px;
+        }
+      }
+    }
+    .name {
+      font-size: 48px;
+    }
+    .list {
+      line-height: normal;
+      height: 164px;
+      padding: 0 30px 0 30px;
+      .memo {
+        font-size: 36px;
+        margin: 14px 0 0 0;
+      }
+      .icons {
+        font-size: 60px;
+      }
+    }
   }
 </style>

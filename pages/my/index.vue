@@ -4,7 +4,7 @@
       <div v-for="(items, index) in shortcut" :key="index" class="align-center">
         <div aspectratio>
           <div class="img_wrapper" aspectratio-content>
-            <van-image class="img" :src="`${items.img}`" lazy-load>
+            <van-image :src="`${items.img}`" class="img" lazy-load>
               <template v-slot:loading>
                 <van-loading type="spinner" size="20" />
               </template>
@@ -19,15 +19,15 @@
     <template v-for="(row, index) in rows">
       <van-cell
         :key="index"
+        :value="row.count"
         value-class="rows-value"
         class="rows"
-        :value="row.count"
         is-link
         flex="cross:center"
       >
         <!-- 使用 title 插槽来自定义标题 -->
         <template slot="title">
-          <span class="title"><icon-font class="left-icon" :icon-class="row.icon" />{{ row.title }}</span>
+          <span class="title"><icon-font :icon-class="row.icon" class="left-icon" />{{ row.title }}</span>
         </template>
         <icon-font
           slot="right-icon"
@@ -38,7 +38,7 @@
     </template>
     <div v-for="(row, index) in playlist" :key="index" class="playlist">
       <van-collapse v-model="activeNames[index]">
-        <van-collapse-item class="collapse-items" :name="index">
+        <van-collapse-item :name="index" class="collapse-items">
           <div slot="title" class="ground-title">
             <icon-font class="left-icon" icon-class="arrow-right" />{{ row.name }}
           </div>
@@ -47,7 +47,7 @@
               <div flex="main:center cross:center box:first">
                 <div class="img_wrapper" aspectratio>
                   <div aspectratio-content>
-                    <van-image class="img" :src="`${items.coverImgUrl}`" lazy-load>
+                    <van-image :src="`${items.coverImgUrl}`" class="img" lazy-load>
                       <template v-slot:loading>
                         <van-loading type="spinner" size="20" />
                       </template>
