@@ -34,7 +34,7 @@ export default {
 <style lang="less">
   .app {
     &.has_footer {
-      padding-bottom: @footer-height;
+      padding-bottom: @footer-height + 28px;
     }
   }
 </style>>

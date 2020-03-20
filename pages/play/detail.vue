@@ -48,48 +48,40 @@
         flex="cross:center"
       >
         <template slot="title">
-          <div class="title">
-            <van-icon class="play" name="play-circle-o" /><span class="name">播放全部</span><span class="songs gray">(共56首)</span>
+          <div class="title" flex="cross:center">
+            <div class="number play">
+              <van-icon class="icon" name="play-circle-o" />
+            </div>
+            <div><span class="name">播放全部</span><span class="songs gray">(共{{ playlist.trackCount }}首)</span></div>
           </div>
         </template>
         <div class="collect">
-          <van-icon name="plus" />收藏(54557878)
+          <van-icon name="plus" />收藏({{ playlist.subscribedCount }})
         </div>
       </van-cell>
       <van-cell
+        v-for="(row, index) in playlist.tracks"
+        :key="index"
         class="list"
         flex="cross:center"
       >
         <template slot="title">
-          <div class="title">
-            <div class="name">
-              李香兰
+          <div class="title" flex="cross:center">
+            <div class="number gray">
+              {{ index + 1 }}
             </div>
-            <div class="memo">
-              周星驰
-            </div>
-          </div>
-        </template>
-        <div>
-          <van-icon class="icons" name="ellipsis" />
-        </div>
-      </van-cell>
-      <van-cell
-        class="list"
-        flex="cross:center"
-      >
-        <template slot="title">
-          <div class="title">
-            <div class="name">
-              李香兰<span class="gray">(共56首)</span>
-            </div>
-            <div class="memo gray">
-              周星驰
+            <div>
+              <div class="name">
+                {{ row.name }}<span class="gray" />
+              </div>
+              <div class="memo gray">
+                {{ (row.ar.map(item => item.name)).join('/') }} - {{ row.al.name }}
+              </div>
             </div>
           </div>
         </template>
         <div>
-          <van-icon class="icons" name="ellipsis" />
+          <icon-font v-if="row.mv > 0" icon-class="video" class="icons" /><van-icon class="icons" name="ellipsis" />
         </div>
       </van-cell>
     </div>
@@ -195,12 +187,22 @@ export default {
 
   }
   @padding-top-bottom: 43px;
+  @left: 118px;
   .play_list {
     .gray {
       color: #979798;
     }
     border-top-right-radius: 30px;
     border-top-left-radius: 30px;
+    .number {
+      width: @left;
+      text-align: center;
+    }
+    .header, .list {
+      &::after {
+        left: @left;
+      }
+    }
     .header {
       line-height: normal;
       padding: 0;
@@ -212,12 +214,13 @@ export default {
         display: inline-block;
       }
       .play {
-        font-size: 62px;
-        margin: 0 31px 0 0;
-        vertical-align: text-bottom;
+        .icon {
+          font-size: 62px;
+          vertical-align: middle;
+        }
       }
       .title {
-        padding: @padding-top-bottom 0 @padding-top-bottom 30px;
+        padding: @padding-top-bottom 0 @padding-top-bottom 0;
         .songs {
           font-size: 44px;
         }
@@ -227,15 +230,23 @@ export default {
       font-size: 48px;
     }
     .list {
-      line-height: normal;
-      height: 164px;
-      padding: 0 30px 0 30px;
+      line-height: 1.5;
+      padding: 19px 30px 19px 0;
+      .van-cell__title {
+        flex: auto;
+      }
+      .number {
+        font-size: 50px;
+      }
       .memo {
         font-size: 36px;
-        margin: 14px 0 0 0;
       }
       .icons {
         font-size: 60px;
+        vertical-align: middle;
+        &:last-child {
+          margin-left: 62px;
+        }
       }
     }
   }
