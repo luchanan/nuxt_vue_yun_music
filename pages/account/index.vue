@@ -241,7 +241,7 @@ export default {
       & > div > div:first-child {
         padding: 0;
         height: 30px;
-        background: #eeefff;
+        background: #EEEFF0;
       }
       .group_content {
         & > div {

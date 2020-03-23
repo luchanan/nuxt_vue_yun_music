@@ -2,7 +2,7 @@
   <div class="playlist_detail">
     <section class="top" flex="cross:center main:justify dir:top">
       <div :style="{backgroundImage:`url(${playlist.coverImgUrl}?param=170y170)`}" class="bg" />
-      <div flex="cross:center box:first" class="summary">
+      <div flex="cross:center" class="summary">
         <div class="img-font-content">
           <div aspectratio>
             <div aspectratio-content>
@@ -60,6 +60,7 @@
         </div>
       </van-cell>
       <van-cell
+        @click="$router.push({path: '/play/player', query: {ids: row.id, aid: row.al.id}})"
         v-for="(row, index) in playlist.tracks"
         :key="index"
         class="list"
@@ -81,6 +82,7 @@
           </div>
         </template>
         <div>
+          <!--音乐图标判断的条件，暂时不知道怎么判断的-->
           <icon-font v-if="row.mv > 0" icon-class="video" class="icons" /><van-icon class="icons" name="ellipsis" />
         </div>
       </van-cell>
@@ -155,6 +157,7 @@ export default {
         z-index: 2;
         .font {
           padding: 45px;
+          flex: 1;
           color: @font-white-color;
           h1 {
             font-size: 54px;

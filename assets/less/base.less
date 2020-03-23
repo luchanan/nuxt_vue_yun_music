@@ -118,3 +118,18 @@ img {
     aspect-ratio: '394:394';
   }
 }
+.header {
+  &.reset {
+    height: 192px - @status-height;
+    line-height: 192px - @status-height;
+    .van-nav-bar__title {
+      line-height: 1.2;
+    }
+    .name {
+      font-size: 48px;
+    }
+    .auth {
+      font-size: 36px;
+    }
+  }
+}

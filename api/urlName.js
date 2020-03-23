@@ -17,6 +17,12 @@ const urlName = {
   userSubcount: '/user/subcount',
   userPlaylist: '/user/playlist',
   // 帐号
-  userDetail: '/user/detail'
+  userDetail: '/user/detail',
+  // 播放器
+  songDetail: '/song/detail', // 参数?ids=,
+  checkMusic: '/check/music', // ?id=
+  getMusicUrl: '/song/url', // ?id=
+  getLyric: '/lyric', // ?id=
+  getAlbum: '/album'
 }
 export default urlName

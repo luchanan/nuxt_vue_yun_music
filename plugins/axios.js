@@ -22,8 +22,13 @@ function url (url, config = {}) {
     dir: 'api',
     domain: '/'
   }
+  let transferUrl = urlName[url]
+  if (url && url.includes('?')) {
+    let index = url.indexOf('?')
+    transferUrl = urlName[url.substring(0, index)] + url.substring(index)
+  }
   let mergeConfigParams = { ...defaultConfigParams, ...config }
-  return mergeConfigParams.domain + mergeConfigParams.dir + urlName[url]
+  return mergeConfigParams.domain + mergeConfigParams.dir + transferUrl
 }
 
 export default function ({ $axios, redirect }) {

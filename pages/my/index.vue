@@ -42,7 +42,7 @@
           <div slot="title" class="ground-title">
             <icon-font class="left-icon" icon-class="arrow-right" />{{ row.name }}
           </div>
-          <van-cell v-for="(items, each) in row.list" :key="each" class="cells" is-link>
+          <van-cell @click="$router.push({path: 'play/detail', query: {id: items.id}})" v-for="(items, each) in row.list" :key="each" class="cells" is-link>
             <template slot="title">
               <div flex="main:center cross:center box:first">
                 <div class="img_wrapper" aspectratio>
@@ -210,8 +210,13 @@ export default {
         padding: 0 0;
         [role="button"] {
           padding: 28px 0;
-          background: #eeeff0;
           color: #747475;
+        }
+        .van-collapse-item__title {
+          background: #EEEFF0;
+        }
+        .van-collapse-item__wrapper {
+          background-color: white;
         }
         .van-collapse-item__content {
           padding: 0;
