@@ -60,11 +60,11 @@
         </div>
       </van-cell>
       <van-cell
-        @click="$router.push({path: '/play/player', query: {ids: row.id, aid: row.al.id}})"
         v-for="(row, index) in playlist.tracks"
         :key="index"
         class="list"
         flex="cross:center box:last"
+        @click="$router.push({path: '/play/player', query: {ids: row.id, aid: row.al.id}})"
       >
         <template slot="title">
           <div class="title" flex="cross:center box:first">

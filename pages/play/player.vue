@@ -1,9 +1,9 @@
 <template>
   <div class="player">
     <van-nav-bar
-      @click-left="$router.back()"
       flex="cross:center box:justify"
       class="header reset"
+      @click-left="$router.back()"
     >
       <template slot="left">
         <div class="left">
@@ -54,7 +54,7 @@
       </div>
       <div class="process">
         <div class="height playing-default" />
-        <div style="width: 60%" class="height playing-cache" />
+        <div style="width: 0" class="height playing-cache" />
         <div style="width: 0" class="height playing-process" />
       </div>
       <div class="time endtime">
@@ -70,7 +70,7 @@
           <icon-font icon-class="prev" />
         </li>
         <li class="play">
-          <icon-font @click.native="playClick" :icon-class="isPlaying ? 'pause' : 'play'" />
+          <icon-font :icon-class="isPlaying ? 'pause' : 'play'" @click.native="playClick" />
         </li>
         <li class="next">
           <icon-font icon-class="next" />

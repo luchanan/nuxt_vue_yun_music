@@ -20,6 +20,7 @@ export function stringFormat () {
   let result = arguments[0]
   if (arguments.length > 0) {
     if (arguments.length === 2 && typeof (arguments[1]) === 'object') {
+      // eslint-disable-next-line
       for (let key in arguments[1]) {
         if (arguments[1][key] !== undefined) {
           let reg = new RegExp('({' + key + '})', 'g')
