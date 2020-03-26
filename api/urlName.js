@@ -23,6 +23,7 @@ const urlName = {
   checkMusic: '/check/music', // ?id=
   getMusicUrl: '/song/url', // ?id=
   getLyric: '/lyric', // ?id=
+  getSongUrl: '/song/url', // 音乐播放地址 ?id=405998841,33894312
   getAlbum: '/album'
 }
 export default urlName

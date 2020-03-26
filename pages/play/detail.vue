@@ -64,10 +64,10 @@
         v-for="(row, index) in playlist.tracks"
         :key="index"
         class="list"
-        flex="cross:center"
+        flex="cross:center box:last"
       >
         <template slot="title">
-          <div class="title" flex="cross:center">
+          <div class="title" flex="cross:center box:first">
             <div class="number gray">
               {{ index + 1 }}
             </div>
@@ -93,6 +93,14 @@
 <script>
 // import * as tools from '@/utils/tools'
 export default {
+  head () {
+    return {
+      title: `${this.playlist.name} - 歌单 - 网易云音乐`,
+      meta: [
+        { hid: 'description', name: 'description', content: `${this.playlist.creator.nickname} 创建的歌单《${this.playlist.name}》。简介：${this.playlist.description}` }
+      ]
+    }
+  },
   data () {
     return {
     }
@@ -235,8 +243,10 @@ export default {
     .list {
       line-height: 1.5;
       padding: 19px 30px 19px 0;
-      .van-cell__title {
-        flex: auto;
+      // .van-cell__title {
+      // }
+      .van-cell__value {
+        flex: none;
       }
       .number {
         font-size: 50px;

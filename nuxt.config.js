@@ -12,7 +12,11 @@ module.exports = {
       { hid: 'description', name: 'description', content: process.env.npm_package_description || '' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      { rel: 'apple-touch-icon', href: '/touch-icon/64_64.png' },
+      { rel: 'apple-touch-icon', sizes: '114x114', href: '/touch-icon/114_1114.png' },
+      { rel: 'apple-touch-icon', sizes: '152x152', href: '/touch-icon/152_152.png' },
+      { rel: 'apple-touch-icon', sizes: '180x180', href: '/touch-icon/180_180.png' }
     ]
   },
   /*

@@ -29,18 +29,61 @@
       <div class="song-disc">
         <div class="song-turn">
           <div class="song-rollwrap">
-            <div class="song-img circling">
+            <div :class="`song-img circling ${isPlaying ? '' : 'pause'}`">
               <van-image :src="`${songDetail.al.picUrl}`" class="img" lazy-load />
             </div>
           </div>
           <div class="song-lgour" />
         </div>
       </div>
+      <div class="song-action">
+        <ul flex="cross:center main:center">
+          <li><icon-font icon-class="love" /></li>
+          <li><icon-font icon-class="download" /></li>
+          <li><icon-font icon-class="effect" /></li>
+          <li><icon-font icon-class="comment" /></li>
+          <li><icon-font icon-class="more_vertical" /></li>
+        </ul>
+      </div>
     </div>
+    <div class="play_process" flex="cross:center main:justify">
+      <div class="time starttime">
+        <template v-if="player">
+          {{ player.timeFormat(player.currentTime) }}
+        </template>
+      </div>
+      <div class="process">
+        <div class="height playing-default" />
+        <div style="width: 60%" class="height playing-cache" />
+        <div style="width: 0" class="height playing-process" />
+      </div>
+      <div class="time endtime">
+        <template v-if="player">
+          {{ player.timeFormat(player.duration) }}
+        </template>
+      </div>
+    </div>
+    <div class="player_control">
+      <ul flex="cross:center main:center">
+        <li><icon-font class="model" icon-class="loop" /></li>
+        <li class="prev">
+          <icon-font icon-class="prev" />
+        </li>
+        <li class="play">
+          <icon-font @click.native="playClick" :icon-class="isPlaying ? 'pause' : 'play'" />
+        </li>
+        <li class="next">
+          <icon-font icon-class="next" />
+        </li>
+        <li><icon-font icon-class="play_list" /></li>
+      </ul>
+    </div>
+    <audio id="player" />
   </div>
 </template>
 
 <script>
+import Player from './player.js'
 export default {
   page: {
     footer: false
@@ -52,17 +95,39 @@ export default {
   },
   data () {
     return {
+      isPlaying: false,
+      player: null
     }
   },
   async asyncData ({ req, res, error, params, $axios, query }) {
     let { songs: [songDetail] } = await $axios.post(`songDetail?timeStamp=${+new Date()}`, { ids: query.ids })
-    let { album } = await $axios.post(`getAlbum?id=${+new Date()}`, { id: query.aid })
+    let { data: [song] } = await $axios.post(`getSongUrl?id=${+new Date()}`, { id: songDetail.id })
     return {
       songDetail,
-      album
+      song
     }
   },
+  mounted () {
+    this.player = new Player(document.getElementById('player'), { url: this.song.url })
+    this.play()
+  },
   methods: {
+    playClick () {
+      if (this.player.paused()) {
+        this.isPlaying = true
+        this.play()
+      } else {
+        this.isPlaying = false
+        this.player.pause()
+      }
+    },
+    play () {
+      this.player.play(() => {
+        this.isPlaying = true
+      }, () => {
+        this.isPlaying = false
+      })
+    }
   }
 }
 </script>
@@ -95,6 +160,9 @@ export default {
       transition: opacity .3s linear;
       overflow: hidden;
       opacity: 0.5;
+      &.blur {
+        filter: blur(26PX);
+      }
       &[lazy="loaded"] {
         opacity: 1;
       }
@@ -183,6 +251,95 @@ export default {
           z-index: 2;
           background: url('~@/assets/images/player/disc-plus.png');
           background-size: contain;
+        }
+      }
+    }
+    .song-action {
+      padding: 230px 52px 89px 52px;
+      li {
+        padding: 0 78px;
+      }
+      .iconfont {
+        font-size: 70px;
+        color: @font-white-color;
+      }
+    }
+    .player_control {
+      position: relative;
+      padding: 79px 55px 0 55px;
+      z-index: 1;
+      .iconfont {
+        font-size: 70px;
+        color: @font-white-color;
+      }
+      .play {
+        padding: 0;
+        .iconfont {
+          font-size: 140px;
+        }
+      }
+      .prev, .next {
+        padding: 0 150px 0 215px;
+      }
+    }
+    .play_process {
+      position: relative;
+      z-index: 1;
+      padding: 0 52px;
+      .process {
+        position: relative;
+        height: 50px;
+        width: 100%;
+        .height {
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: 50%;
+          height: 6px;
+          margin-top: -3px;
+          background: rgba(255, 255, 255, .2);
+          border-radius: 10px;
+          &.playing-cache {
+            background: rgba(255, 255, 255, .5);
+          }
+          &.playing-process {
+            background: rgba(211, 58, 49, 1);
+            &:before {
+              content: " ";
+              display: inline-block;
+              position: absolute;
+              right: -6px;
+              top: 50%;
+              margin-top: -6px;
+              width: 12px;
+              height: 12px;
+              background: rgba(211, 58, 49, 1);
+              border-radius: 50%;
+              z-index: 2;
+            }
+            &:after {
+              content: " ";
+              display: inline-block;
+              position: absolute;
+              right: -25px;
+              top: 50%;
+              margin-top: -25px;
+              width: 50px;
+              height: 50px;
+              background: #fff;
+              border-radius: 50%;
+            }
+          }
+        }
+      }
+      .time {
+        font-size: 28px;
+        color: @font-white-color;
+        &.starttime {
+          margin-right: 44px;
+        }
+        &.endtime {
+          margin-left: 44px;
         }
       }
     }
