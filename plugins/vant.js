@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import 'vant/lib/index.css'
-import { NavBar, Icon, NumberKeyboard, Dialog, SwipeCell, Button, Field, Cell, CellGroup, Toast, Grid, GridItem, Image, Lazyload, Loading, Swipe, SwipeItem, Collapse, CollapseItem, Divider } from 'vant'
+import { Popup, NavBar, Icon, NumberKeyboard, Dialog, SwipeCell, Button, Field, Cell, CellGroup, Toast, Grid, GridItem, Image, Lazyload, Loading, Swipe, SwipeItem, Collapse, CollapseItem, Divider } from 'vant'
 // 按需加载，全局注册
+Vue.use(Popup)
 Vue.use(Dialog)
 Vue.use(SwipeCell)
 Vue.use(Button)

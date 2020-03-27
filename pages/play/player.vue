@@ -1,9 +1,9 @@
 <template>
   <div class="player">
     <van-nav-bar
+      @click-left="back"
       flex="cross:center box:justify"
       class="header reset"
-      @click-left="$router.back()"
     >
       <template slot="left">
         <div class="left">
@@ -29,7 +29,7 @@
       <div class="song-disc">
         <div class="song-turn">
           <div class="song-rollwrap">
-            <div :class="`song-img circling ${isPlaying ? '' : 'pause'}`">
+            <div :class="`song-img circling ${player && player.isPlaying ? '' : 'pause'}`">
               <van-image :src="`${songDetail.al.picUrl}`" class="img" lazy-load />
             </div>
           </div>
@@ -65,24 +65,26 @@
     </div>
     <div class="player_control">
       <ul flex="cross:center main:center">
-        <li><icon-font class="model" icon-class="loop" /></li>
+        <li><icon-font @click.native="modelClick" :icon-class="player ? player.playModel : 'loop'" class="model" /></li>
         <li class="prev">
           <icon-font icon-class="prev" />
         </li>
         <li class="play">
-          <icon-font :icon-class="isPlaying ? 'pause' : 'play'" @click.native="playClick" />
+          <icon-font :icon-class="player && player.isPlaying ? 'pause' : 'play'" @click.native="playClick" />
         </li>
         <li class="next">
           <icon-font icon-class="next" />
         </li>
-        <li><icon-font icon-class="play_list" /></li>
+        <li><icon-font @click.native="showPopupList" icon-class="play_list" /></li>
       </ul>
     </div>
-    <audio id="player" />
+    <audio id="player" loop />
+    <popupList ref="popupList" />
   </div>
 </template>
 
 <script>
+import popupList from './popupPlayList'
 import Player from './player.js'
 export default {
   page: {
@@ -93,9 +95,9 @@ export default {
       title: `${this.songDetail.name} ${this.songDetail.alia.length > 0 ? '（' + this.songDetail.alia.join('/') + '）' : ''} - ${this.songDetail.ar.map(item => item.name).join('/')} - 单曲 - 网易云音乐`
     }
   },
+  components: { popupList },
   data () {
     return {
-      isPlaying: false,
       player: null
     }
   },
@@ -112,21 +114,26 @@ export default {
     this.play()
   },
   methods: {
+    showPopupList () {
+      this.$refs.popupList.show()
+    },
+    modelClick () {
+      let obj = this.player.changeModel()
+      this.$toast(obj.desc)
+    },
+    back () {
+      this.player.destroy()
+      this.$router.back()
+    },
     playClick () {
       if (this.player.paused()) {
-        this.isPlaying = true
         this.play()
       } else {
-        this.isPlaying = false
         this.player.pause()
       }
     },
     play () {
-      this.player.play(() => {
-        this.isPlaying = true
-      }, () => {
-        this.isPlaying = false
-      })
+      this.player.play()
     }
   }
 }
@@ -301,6 +308,7 @@ export default {
           border-radius: 10px;
           &.playing-cache {
             background: rgba(255, 255, 255, .5);
+            transition: width 0.2s ease;
           }
           &.playing-process {
             background: rgba(211, 58, 49, 1);
