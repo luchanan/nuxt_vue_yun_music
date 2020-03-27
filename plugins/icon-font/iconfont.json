@@ -6,6 +6,34 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "1684210",
+      "name": "delete2",
+      "font_class": "delete",
+      "unicode": "e623",
+      "unicode_decimal": 58915
+    },
+    {
+      "icon_id": "6019681",
+      "name": "喇叭",
+      "font_class": "sound",
+      "unicode": "e60d",
+      "unicode_decimal": 58893
+    },
+    {
+      "icon_id": "12627524",
+      "name": "添加收藏夹",
+      "font_class": "add",
+      "unicode": "e60e",
+      "unicode_decimal": 58894
+    },
+    {
+      "icon_id": "13251239",
+      "name": "下载",
+      "font_class": "download",
+      "unicode": "e8c6",
+      "unicode_decimal": 59590
+    },
+    {
       "icon_id": "13712880",
       "name": "play_list",
       "font_class": "play_list",
@@ -102,13 +130,6 @@
       "font_class": "comment",
       "unicode": "e7f0",
       "unicode_decimal": 59376
-    },
-    {
-      "icon_id": "9410282",
-      "name": "下载",
-      "font_class": "download",
-      "unicode": "e687",
-      "unicode_decimal": 59015
     },
     {
       "icon_id": "573381",

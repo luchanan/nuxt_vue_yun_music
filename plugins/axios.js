@@ -4,8 +4,8 @@
 // $axios.$get('personalized', { params: { limit: 6 } })
 // $axios.get('personalized', { params: { limit: 6 } })
 // 项目对$axios.onResponse进行处理， 所以统一使用$axios.post调用方便管理
-import urlName from '@/api/urlName'
 import qs from 'qs'
+import urlName from '@/api/urlName'
 // import { merge } from 'lodash'
 // import { Cookie } from '@/utils/storage'
 let contentTypes = {

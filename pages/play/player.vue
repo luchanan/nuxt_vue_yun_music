@@ -1,9 +1,9 @@
 <template>
   <div class="player">
     <van-nav-bar
-      @click-left="back"
       flex="cross:center box:justify"
       class="header reset"
+      @click-left="back"
     >
       <template slot="left">
         <div class="left">
@@ -42,7 +42,7 @@
           <li><icon-font icon-class="download" /></li>
           <li><icon-font icon-class="effect" /></li>
           <li><icon-font icon-class="comment" /></li>
-          <li><icon-font icon-class="more_vertical" /></li>
+          <li><icon-font icon-class="more_vertical" @click.native="showMorePopup" /></li>
         </ul>
       </div>
     </div>
@@ -65,7 +65,7 @@
     </div>
     <div class="player_control">
       <ul flex="cross:center main:center">
-        <li><icon-font @click.native="modelClick" :icon-class="player ? player.playModel : 'loop'" class="model" /></li>
+        <li><icon-font :icon-class="player ? player.playModel : 'loop'" class="model" @click.native="modelClick" /></li>
         <li class="prev">
           <icon-font icon-class="prev" />
         </li>
@@ -75,16 +75,18 @@
         <li class="next">
           <icon-font icon-class="next" />
         </li>
-        <li><icon-font @click.native="showPopupList" icon-class="play_list" /></li>
+        <li><icon-font icon-class="play_list" @click.native="showPopupList" /></li>
       </ul>
     </div>
     <audio id="player" loop />
     <popupList ref="popupList" />
+    <morePopup ref="morePopup" />
   </div>
 </template>
 
 <script>
 import popupList from './popupPlayList'
+import morePopup from './morePopup'
 import Player from './player.js'
 export default {
   page: {
@@ -95,7 +97,7 @@ export default {
       title: `${this.songDetail.name} ${this.songDetail.alia.length > 0 ? '（' + this.songDetail.alia.join('/') + '）' : ''} - ${this.songDetail.ar.map(item => item.name).join('/')} - 单曲 - 网易云音乐`
     }
   },
-  components: { popupList },
+  components: { popupList, morePopup },
   data () {
     return {
       player: null
@@ -116,6 +118,9 @@ export default {
   methods: {
     showPopupList () {
       this.$refs.popupList.show()
+    },
+    showMorePopup () {
+      this.$refs.morePopup.show()
     },
     modelClick () {
       let obj = this.player.changeModel()

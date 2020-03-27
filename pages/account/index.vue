@@ -69,9 +69,9 @@
           :key="childIndex"
           :class="`${child.class ? child.class : ''}`"
           :value="child.value"
-          @click="itemClick(child.click)"
           value-class="desc"
           title-class="title"
+          @click="itemClick(child.click)"
         >
           <template slot="title">
             <div class="title">
