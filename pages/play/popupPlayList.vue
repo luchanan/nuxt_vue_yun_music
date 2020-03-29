@@ -19,9 +19,7 @@
           <div :class="`name ${id == row.id ? 'playing' : ''}`" flex="cross:center">
             <div><icon-font icon-class="sound" /></div>
             <div class="van-ellipsis">
-              {{ row.name }}
-            </div><div class="gray van-ellipsis">
-              - {{ (row.ar.map(item => item.name)).join('/') }} - {{ row.al.name }}
+              {{ row.name }} <span class="gray">- {{ (row.ar.map(item => item.name)).join('/') }} - {{ row.al.name }}</span>
             </div>
           </div>
           <div><van-icon class="clo" name="cross" /></div>

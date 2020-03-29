@@ -72,8 +72,8 @@
               {{ index + 1 }}
             </div>
             <div>
-              <div class="name">
-                {{ row.name }}<span class="gray" />
+              <div class="name van-ellipsis">
+                {{ row.name }}
               </div>
               <div class="memo gray">
                 {{ (row.ar.map(item => item.name)).join('/') }} - {{ row.al.name }}
