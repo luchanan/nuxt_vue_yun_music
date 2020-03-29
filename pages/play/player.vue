@@ -64,6 +64,7 @@
       </div>
     </div>
     <div class="player_control">
+      <audio id="player" loop />
       <ul flex="cross:center main:center">
         <li><icon-font :icon-class="player ? player.playModel : 'loop'" class="model" @click.native="modelClick" /></li>
         <li class="prev">
@@ -78,7 +79,6 @@
         <li><icon-font icon-class="play_list" @click.native="showPopupList" /></li>
       </ul>
     </div>
-    <audio id="player" loop />
     <popupList ref="popupList" />
     <morePopup ref="morePopup" />
   </div>

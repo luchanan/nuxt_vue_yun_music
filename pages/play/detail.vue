@@ -64,7 +64,7 @@
         :key="index"
         class="list"
         flex="cross:center box:last"
-        @click="$router.push({path: '/play/player', query: {ids: row.id, aid: row.al.id}})"
+        @click="goPlayer(row)"
       >
         <template slot="title">
           <div class="title" flex="cross:center box:first">
@@ -109,6 +109,16 @@ export default {
     let { playlist } = await $axios.get('playlistDetail', { params: { id: query.id, timeStamp: +new Date() } })
     return {
       playlist
+    }
+  },
+  mounted () {
+    this.$store.commit('player/updateId', this.playlist.id)
+    this.$store.commit('player/updateList', this.playlist.tracks)
+  },
+  methods: {
+    goPlayer (row) {
+      this.$store.commit('player/updateCurrentPlayId', row.id)
+      this.$router.push({ path: '/play/player', query: { ids: row.id } })
     }
   }
 }

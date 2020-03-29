@@ -14,14 +14,14 @@
       </div>
     </div>
     <ul>
-      <li>
+      <li v-for="(row, index) in list" :key="index">
         <div class="wrapper van-hairline--bottom" flex="cross:center box:last">
-          <div class="name playing" flex="cross:center">
+          <div :class="`name ${id == row.id ? 'playing' : ''}`" flex="cross:center">
             <div><icon-font icon-class="sound" /></div>
-            <div>
-              纪念
-            </div><div class="gray">
-              - 林嘉欣
+            <div class="van-ellipsis">
+              {{ row.name }}
+            </div><div class="gray van-ellipsis">
+              - {{ (row.ar.map(item => item.name)).join('/') }} - {{ row.al.name }}
             </div>
           </div>
           <div><van-icon class="clo" name="cross" /></div>
@@ -39,6 +39,14 @@ export default {
   data () {
     return {
       visible: false
+    }
+  },
+  computed: {
+    list () {
+      return this.$store.state.player.playList
+    },
+    id () {
+      return this.$store.state.player.currentPlayId
     }
   },
   methods: {
