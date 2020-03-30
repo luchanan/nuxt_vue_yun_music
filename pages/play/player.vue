@@ -68,13 +68,13 @@
       <ul flex="cross:center main:center">
         <li><icon-font :icon-class="player ? player.playModel : 'loop'" class="model" @click.native="modelClick" /></li>
         <li class="prev">
-          <icon-font icon-class="prev" />
+          <icon-font icon-class="prev" @click.native="prev" />
         </li>
         <li class="play">
           <icon-font :icon-class="player && player.isPlaying ? 'pause' : 'play'" @click.native="playClick" />
         </li>
         <li class="next">
-          <icon-font icon-class="next" />
+          <icon-font icon-class="next" @click.native="next" />
         </li>
         <li><icon-font icon-class="play_list" @click.native="showPopupList" /></li>
       </ul>
@@ -116,6 +116,27 @@ export default {
     this.play()
   },
   methods: {
+    async getSongUrl (id) {
+      try {
+        let { songs: [songDetail] } = await this.$axios.post(`songDetail?timeStamp=${+new Date()}`, { ids: id })
+        this.$store.commit('player/updateCurrentPlayId', songDetail.id)
+        let { data: [song] } = await this.$axios.post(`getSongUrl?id=${+new Date()}`, { id: songDetail.id })
+        this.songDetail = songDetail
+        this.song = song
+        return song.url
+      } catch (res) {
+        return ''
+      }
+    },
+    async next () {
+      await this.getSongUrl(this.player.next())
+      console.log(this.song.url)
+      this.player.changPlay(this.song.url)
+    },
+    async prev () {
+      await this.getSongUrl(this.player.prev())
+      this.player.changPlay(this.song.url)
+    },
     showPopupList () {
       this.$refs.popupList.show()
     },

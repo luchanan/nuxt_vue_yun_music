@@ -29,6 +29,12 @@ export default class Player {
       this.resetPlay()
     })
   }
+  changPlay (url) {
+    this.resetPlay()
+    document.querySelector('.play_process .playing-cache').style.width = `0%`
+    this.element.src = url
+    this.play()
+  }
   resetPlay () {
     // 重置开始播放值
     this.isPlaying = false
@@ -115,5 +121,33 @@ export default class Player {
         this.playProcess()
       } else if (error) { error() }
     })
+  }
+  random (min = 0, max) {
+    // 随机播放
+    let range = max - min
+    let random = Math.random()
+    return min + Math.round(range * random)
+  }
+  nextPrevCommon (type) {
+    let currentId = window.$nuxt.$store.state.player.currentPlayId
+    let playlist = window.$nuxt.$store.state.player.playList
+    let currentIdIndex = playlist.findIndex(items => items.id === currentId)
+    if (this.playModel !== 'random' && currentIdIndex > -1) {
+      if (type === 0) {
+        return currentIdIndex - 1 < 0 ? playlist[playlist.length - 1].id : playlist[currentIdIndex - 1].id
+      } else if (type === 1) {
+        return currentIdIndex + 1 >= playlist.length ? playlist[0].id : playlist[currentIdIndex + 1].id
+      }
+    } else {
+      return playlist[this.random(0, playlist.length - 1)].id
+    }
+  }
+  prev () {
+    // 上一首
+    return this.nextPrevCommon(0)
+  }
+  next () {
+    // 下一首
+    return this.nextPrevCommon(1)
   }
 }
