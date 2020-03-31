@@ -56,7 +56,12 @@
         <div class="height playing-default" />
         <div style="width: 0" class="height playing-cache" />
         <div style="width: 0" class="height playing-process">
-          <div class="circle">
+          <div
+            @touchstart="rangeTouchStart"
+            @touchmove="rangeTouchMove"
+            @touchend="rangeTouchEnd"
+            class="circle"
+          >
             <div class="red" />
           </div>
         </div>
@@ -83,7 +88,7 @@
         <li><icon-font @click.native="showPopupList" icon-class="play_list" /></li>
       </ul>
     </div>
-    <popupList ref="popupList" />
+    <popupList ref="popupList" @clickPlay="clickPlay" />
     <morePopup ref="morePopup" />
   </div>
 </template>
@@ -120,6 +125,25 @@ export default {
     this.play()
   },
   methods: {
+    rangeTouchStart (e) {
+      this.touching = true
+      this.startPageX = e.touches[0].pageX
+      this.startOffsetLeft = e.target.offsetLeft
+    },
+    rangeTouchMove (e) {
+      this.player.clearPlayProcess()
+      let barWidth = document.querySelector('.process').offsetWidth
+      this.movePageX = e.touches[0].pageX
+      let moveDisctance = Math.min(barWidth, Math.max(0, this.startOffsetLeft + (this.movePageX - this.startPageX)))
+      this.dataProgress = Math.floor(moveDisctance / barWidth * 100)
+      document.querySelector('.play_process .playing-process').style.width = `${this.dataProgress}%`
+      this.player.setPlayCurrentTime(this.dataProgress, 1)
+    },
+    rangeTouchEnd (e) {
+      this.touching = false
+      this.player.setPlayCurrentTime(this.dataProgress)
+      this.player.playProcess()
+    },
     async getSongUrl (id) {
       try {
         let { songs: [songDetail] } = await this.$axios.post(`songDetail?timeStamp=${+new Date()}`, { ids: id })
@@ -132,9 +156,12 @@ export default {
         return ''
       }
     },
+    async clickPlay (id) {
+      await this.getSongUrl(id)
+      this.player.changPlay(this.song.url)
+    },
     async next () {
       await this.getSongUrl(this.player.next())
-      console.log(this.song.url)
       this.player.changPlay(this.song.url)
     },
     async prev () {

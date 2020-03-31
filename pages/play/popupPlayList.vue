@@ -5,7 +5,7 @@
     position="bottom"
   >
     <div class="van-hairline--bottom title" flex="cross:center main:justify">
-      <div><icon-font class="model" icon-class="loop" />列表循环(149)</div>
+      <div><icon-font class="model" icon-class="loop" />列表循环({{ list.length }})</div>
       <div class="right">
         <span><icon-font icon-class="add" /></span>
         <span class="collect_text">收藏全部</span>
@@ -14,7 +14,7 @@
       </div>
     </div>
     <ul>
-      <li v-for="(row, index) in list" :key="index">
+      <li @click="clickPlay(row)" v-for="(row, index) in list" :key="index">
         <div class="wrapper van-hairline--bottom" flex="cross:center box:last">
           <div :class="`name ${id == row.id ? 'playing' : ''}`" flex="cross:center">
             <div><icon-font icon-class="sound" /></div>
@@ -50,6 +50,9 @@ export default {
   methods: {
     show () {
       this.visible = true
+    },
+    clickPlay (row) {
+      this.$emit('clickPlay', row.id)
     }
   }
 }

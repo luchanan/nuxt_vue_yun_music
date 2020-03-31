@@ -30,14 +30,17 @@ export default class Player {
     })
   }
   changPlay (url) {
-    this.resetPlay()
-    document.querySelector('.play_process .playing-cache').style.width = `0%`
+    this.resetPlay({ clearCache: 1 })
     this.element.src = url
     this.play()
   }
-  resetPlay () {
+  resetPlay (params = {}) {
     // 重置开始播放值
     this.isPlaying = false
+    if (params.clearCache && params.clearCache === 1) {
+      this.bufferPer = 0
+      document.querySelector('.play_process .playing-cache').style.width = `0%`
+    }
     this.currentTime = 0
     document.querySelector('.play_process .playing-process').style.width = `0%`
   }
@@ -79,6 +82,9 @@ export default class Player {
     second = second >= 10 ? second : '0' + second
     return minute + ':' + second
   }
+  clearPlayProcess () {
+    window.clearInterval(this.timer)
+  }
   playProcess () {
     // 播放进度样式控制
     window.clearInterval(this.timer)
@@ -87,6 +93,16 @@ export default class Player {
       this.currentTime = this.element.currentTime // 当前播放时长
       document.querySelector('.play_process .playing-process').style.width = `${now}%`
     }, 1000)
+  }
+  setPlayCurrentTime (progress, type = 0) {
+    if (this.duration) {
+      let second = this.duration * progress / 100
+      if (type === 0) {
+        this.currentTime = this.element.currentTime = second
+      } else if (type === 1) {
+        this.currentTime = second
+      }
+    }
   }
   canAutoPlay () {
     // 测试是否能自动播放
