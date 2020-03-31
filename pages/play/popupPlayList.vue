@@ -14,7 +14,7 @@
       </div>
     </div>
     <ul>
-      <li @click="clickPlay(row)" v-for="(row, index) in list" :key="index">
+      <li v-for="(row, index) in list" :key="index" @click="clickPlay(row)">
         <div class="wrapper van-hairline--bottom" flex="cross:center box:last">
           <div :class="`name ${id == row.id ? 'playing' : ''}`" flex="cross:center">
             <div><icon-font icon-class="sound" /></div>
@@ -26,7 +26,7 @@
         </div>
       </li>
     </ul>
-    <div @click="visible = false" class="van-hairline--top close">
+    <div class="van-hairline--top close" @click="visible = false">
       关闭
     </div>
   </van-popup>

@@ -9,6 +9,7 @@ export default class Player {
     this.timer = null
     this.bufferInterval = null
     this.bufferPer = 0
+    this.endedCb = null
     this.playModelList = [
       { name: 'loop', desc: '列表循环' },
       { name: 'once', desc: '单曲循环' },
@@ -24,9 +25,12 @@ export default class Player {
       this.duration = this.element.duration
     })
     this.element.addEventListener('ended', () => {
-      // 播放结束
+      // 播放结束, 单曲循环不会走这里
       window.clearInterval(this.timer)
       this.resetPlay()
+      if (this.params.endedCb) {
+        this.params.endedCb()
+      }
     })
   }
   changPlay (url) {
@@ -38,6 +42,7 @@ export default class Player {
     // 重置开始播放值
     this.isPlaying = false
     if (params.clearCache && params.clearCache === 1) {
+      clearInterval(this.bufferInterval)
       this.bufferPer = 0
       document.querySelector('.play_process .playing-cache').style.width = `0%`
     }

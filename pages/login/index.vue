@@ -6,12 +6,12 @@
       </div>
       <div class="button_wrapper">
         <van-button
-          @click="$router.push('/login/cellphone')"
           class="button"
           round
           size="large"
           hairline
           type="primary"
+          @click="$router.push('/login/cellphone')"
         >
           手机号登录
         </van-button>

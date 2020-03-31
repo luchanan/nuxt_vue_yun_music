@@ -1,9 +1,9 @@
 <template>
   <div class="player">
     <van-nav-bar
-      @click-left="back"
       flex="cross:center box:justify"
       class="header reset"
+      @click-left="back"
     >
       <template slot="left">
         <div class="left">
@@ -12,10 +12,10 @@
       </template>
       <div slot="title" class="title">
         <div class="name">
-          {{ songDetail.name }}
+          <van-notice-bar class="scroll_txt" color="#fff" background="transparent" :text="songDetail.name" />
         </div>
         <div class="auth">
-          {{ (songDetail.ar.map(item => item.name)).join('/') }}
+          <span>{{ (songDetail.ar.map(item => item.name)).join('/') }}</span> <van-icon name="arrow" />
         </div>
       </div>
       <template slot="right">
@@ -42,7 +42,7 @@
           <li><icon-font icon-class="download" /></li>
           <li><icon-font icon-class="effect" /></li>
           <li><icon-font icon-class="comment" /></li>
-          <li><icon-font @click.native="showMorePopup" icon-class="more_vertical" /></li>
+          <li><icon-font icon-class="more_vertical" @click.native="showMorePopup" /></li>
         </ul>
       </div>
     </div>
@@ -57,10 +57,10 @@
         <div style="width: 0" class="height playing-cache" />
         <div style="width: 0" class="height playing-process">
           <div
+            class="circle"
             @touchstart="rangeTouchStart"
             @touchmove="rangeTouchMove"
             @touchend="rangeTouchEnd"
-            class="circle"
           >
             <div class="red" />
           </div>
@@ -75,17 +75,17 @@
     <div class="player_control">
       <audio id="player" :loop="player ? player.playModel == 'once' ? true: false : false" />
       <ul flex="cross:center main:center">
-        <li><icon-font :icon-class="player ? player.playModel : 'loop'" @click.native="modelClick" class="model" /></li>
+        <li><icon-font :icon-class="player ? player.playModel : 'loop'" class="model" @click.native="modelClick" /></li>
         <li class="prev">
-          <icon-font @click.native="prev" icon-class="prev" />
+          <icon-font icon-class="prev" @click.native="prev" />
         </li>
         <li class="play">
           <icon-font :icon-class="player && player.isPlaying ? 'pause' : 'play'" @click.native="playClick" />
         </li>
         <li class="next">
-          <icon-font @click.native="next" icon-class="next" />
+          <icon-font icon-class="next" @click.native="next" />
         </li>
-        <li><icon-font @click.native="showPopupList" icon-class="play_list" /></li>
+        <li><icon-font icon-class="play_list" @click.native="showPopupList" /></li>
       </ul>
     </div>
     <popupList ref="popupList" @clickPlay="clickPlay" />
@@ -121,8 +121,12 @@ export default {
     }
   },
   mounted () {
-    this.player = new Player(document.getElementById('player'), { url: this.song.url })
+    this.player = new Player(document.getElementById('player'), { url: this.song.url, endedCb: this.next })
     this.play()
+    if (this.$store.state.player.playList.length === 0) {
+      this.$store.commit('player/updateCurrentPlayId', this.songDetail.id)
+      this.$store.commit('player/updateList', [this.songDetail])
+    }
   },
   methods: {
     rangeTouchStart (e) {
@@ -206,6 +210,15 @@ export default {
     }
   }
   .player {
+    .scroll_txt {
+      height: auto;
+      padding: 0;
+      line-height: inherit;
+      font-size: 48px;
+      [role="marquee"] {
+        height: 58px;
+      }
+    }
     min-height: 100vh;
     position: relative;
     overflow: hidden;

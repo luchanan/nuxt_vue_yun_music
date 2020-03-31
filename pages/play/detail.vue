@@ -62,9 +62,9 @@
       <van-cell
         v-for="(row, index) in playlist.tracks"
         :key="index"
-        @click="goPlayer(row)"
         :class="`list ${row.copyright == 1 ? 'disabled' : ''}`"
         flex="cross:center box:last"
+        @click="goPlayer(row)"
       >
         <template slot="title">
           <div class="title" flex="cross:center box:first">
