@@ -62,9 +62,9 @@
       <van-cell
         v-for="(row, index) in playlist.tracks"
         :key="index"
-        class="list"
-        flex="cross:center box:last"
         @click="goPlayer(row)"
+        :class="`list ${row.copyright == 1 ? 'disabled' : ''}`"
+        flex="cross:center box:last"
       >
         <template slot="title">
           <div class="title" flex="cross:center box:first">
@@ -246,6 +246,9 @@ export default {
           font-size: 44px;
         }
       }
+    }
+    .disabled {
+      opacity: 0.5;
     }
     .name {
       font-size: 48px;

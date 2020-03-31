@@ -69,8 +69,8 @@ export default {
   }
   ul {
     height: 1126px;
-    overflow: auto;
     -webkit-overflow-scrolling: touch;
+    overflow: auto;
   }
   li {
     .icon {

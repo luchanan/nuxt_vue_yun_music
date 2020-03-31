@@ -29,7 +29,7 @@
           推荐歌曲<icon-font icon-class="arrow-right" svg />
         </div>
         <van-grid :border="false" :column-num="3" class="img-font-content">
-          <van-grid-item v-for="(row, index) in recomment" :key="index" class="img-font-items" @click="$router.push({path: 'play/detail', query: {id: row.id}})">
+          <van-grid-item v-for="(row, index) in recomment" :key="index" @click="$router.push({path: 'play/detail', query: {id: row.id}})" class="img-font-items">
             <div aspectratio>
               <div aspectratio-content>
                 <van-image :src="`${row.picUrl}?param=394y394`" class="img mask mask-top" lazy-load>

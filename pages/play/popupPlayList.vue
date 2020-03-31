@@ -26,7 +26,7 @@
         </div>
       </li>
     </ul>
-    <div class="van-hairline--top close" @click="visible = false">
+    <div @click="visible = false" class="van-hairline--top close">
       关闭
     </div>
   </van-popup>
@@ -82,8 +82,8 @@ export default {
   }
   ul {
     height: 1262px;
-    overflow: auto;
     -webkit-overflow-scrolling: touch;
+    overflow: auto;
   }
   li {
     padding-left: 30px;

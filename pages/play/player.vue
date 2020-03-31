@@ -1,9 +1,9 @@
 <template>
   <div class="player">
     <van-nav-bar
+      @click-left="back"
       flex="cross:center box:justify"
       class="header reset"
-      @click-left="back"
     >
       <template slot="left">
         <div class="left">
@@ -24,7 +24,7 @@
         </div>
       </template>
     </van-nav-bar>
-    <div v-lazy:background-image="`//music.163.com/api/img/blur/${songDetail.al.pic_str}`" class="bg" />
+    <div v-lazy:background-image="`//music.163.com/api/img/blur/${songDetail.al.pic_str ? songDetail.al.pic_str : songDetail.al.pic}`" class="bg" />
     <div class="song-wrap">
       <div class="song-disc">
         <div class="song-turn">
@@ -42,7 +42,7 @@
           <li><icon-font icon-class="download" /></li>
           <li><icon-font icon-class="effect" /></li>
           <li><icon-font icon-class="comment" /></li>
-          <li><icon-font icon-class="more_vertical" @click.native="showMorePopup" /></li>
+          <li><icon-font @click.native="showMorePopup" icon-class="more_vertical" /></li>
         </ul>
       </div>
     </div>
@@ -55,7 +55,11 @@
       <div class="process">
         <div class="height playing-default" />
         <div style="width: 0" class="height playing-cache" />
-        <div style="width: 0" class="height playing-process" />
+        <div style="width: 0" class="height playing-process">
+          <div class="circle">
+            <div class="red" />
+          </div>
+        </div>
       </div>
       <div class="time endtime">
         <template v-if="player">
@@ -64,19 +68,19 @@
       </div>
     </div>
     <div class="player_control">
-      <audio id="player" loop />
+      <audio id="player" :loop="player ? player.playModel == 'once' ? true: false : false" />
       <ul flex="cross:center main:center">
-        <li><icon-font :icon-class="player ? player.playModel : 'loop'" class="model" @click.native="modelClick" /></li>
+        <li><icon-font :icon-class="player ? player.playModel : 'loop'" @click.native="modelClick" class="model" /></li>
         <li class="prev">
-          <icon-font icon-class="prev" @click.native="prev" />
+          <icon-font @click.native="prev" icon-class="prev" />
         </li>
         <li class="play">
           <icon-font :icon-class="player && player.isPlaying ? 'pause' : 'play'" @click.native="playClick" />
         </li>
         <li class="next">
-          <icon-font icon-class="next" @click.native="next" />
+          <icon-font @click.native="next" icon-class="next" />
         </li>
-        <li><icon-font icon-class="play_list" @click.native="showPopupList" /></li>
+        <li><icon-font @click.native="showPopupList" icon-class="play_list" /></li>
       </ul>
     </div>
     <popupList ref="popupList" />
@@ -194,7 +198,7 @@ export default {
       overflow: hidden;
       opacity: 0.5;
       &.blur {
-        filter: blur(26PX);
+        filter: blur(20PX);
       }
       &[lazy="loaded"] {
         opacity: 1;
@@ -338,22 +342,7 @@ export default {
           }
           &.playing-process {
             background: rgba(211, 58, 49, 1);
-            &:before {
-              content: " ";
-              display: inline-block;
-              position: absolute;
-              right: -6px;
-              top: 50%;
-              margin-top: -6px;
-              width: 12px;
-              height: 12px;
-              background: rgba(211, 58, 49, 1);
-              border-radius: 50%;
-              z-index: 2;
-            }
-            &:after {
-              content: " ";
-              display: inline-block;
+            .circle {
               position: absolute;
               right: -25px;
               top: 50%;
@@ -362,6 +351,17 @@ export default {
               height: 50px;
               background: #fff;
               border-radius: 50%;
+              .red {
+                position: absolute;
+                margin-left: -6px;
+                left: 50%;
+                top: 50%;
+                margin-top: -6px;
+                width: 12px;
+                height: 12px;
+                background: rgba(211, 58, 49, 1);
+                border-radius: 50%;
+              }
             }
           }
         }
