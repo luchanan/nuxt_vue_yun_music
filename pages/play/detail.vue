@@ -62,9 +62,9 @@
       <van-cell
         v-for="(row, index) in playlist.tracks"
         :key="index"
-        :class="`list ${row.copyright == 1 ? 'disabled' : ''}`"
-        @click="goPlayer(row)"
+        :class="{'list': true, 'disabled': privileges[index].pl === 0 && !/1152|1028|1088|1092/.test(privileges[index].flag)}"
         flex="cross:center box:last"
+        @click="goPlayer(row)"
       >
         <template slot="title">
           <div class="title" flex="cross:center box:first">
@@ -76,6 +76,10 @@
                 {{ row.name }}
               </div>
               <div class="memo gray">
+                <span v-if="privileges[index].fee === 1" class="icon vip">VIP</span>
+                <span v-if="/1152|1028|1088|1092/.test(privileges[index].flag)" class="icon listen">试听</span>
+                <span v-if="/64|68|1088|1092/.test(privileges[index].flag)" class="icon only">独家</span>
+                <span v-if="privileges[index].maxbr === 999000" class="icon sq">SQ</span>
                 {{ (row.ar.map(item => item.name)).join('/') }} - {{ row.al.name }}
               </div>
             </div>
@@ -106,9 +110,10 @@ export default {
     }
   },
   async asyncData ({ req, res, error, params, $axios, query }) {
-    let { playlist } = await $axios.get('playlistDetail', { params: { id: query.id, timeStamp: +new Date() } })
+    let { playlist, privileges } = await $axios.get('playlistDetail', { params: { id: query.id, timeStamp: +new Date() } })
     return {
-      playlist
+      playlist,
+      privileges
     }
   },
   mounted () {

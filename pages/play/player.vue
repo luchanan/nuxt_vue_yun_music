@@ -1,9 +1,9 @@
 <template>
   <div class="player">
     <van-nav-bar
-      @click-left="back"
       flex="cross:center box:justify"
       class="header reset"
+      @click-left="back"
     >
       <template slot="left">
         <div class="left">
@@ -42,7 +42,7 @@
           <li><icon-font icon-class="download" /></li>
           <li><icon-font icon-class="effect" /></li>
           <li><icon-font icon-class="comment" /></li>
-          <li><icon-font @click.native="showMorePopup" icon-class="more_vertical" /></li>
+          <li><icon-font icon-class="more_vertical" @click.native="showMorePopup" /></li>
         </ul>
       </div>
     </div>
@@ -57,10 +57,10 @@
         <div style="width: 0" class="height playing-cache" />
         <div style="width: 0" class="height playing-process">
           <div
+            class="circle"
             @touchstart="rangeTouchStart"
             @touchmove="rangeTouchMove"
             @touchend="rangeTouchEnd"
-            class="circle"
           >
             <div class="red" />
           </div>
@@ -75,17 +75,17 @@
     <div class="player_control">
       <audio id="player" :loop="player ? player.playModel == 'once' ? true: false : false" />
       <ul flex="cross:center main:center">
-        <li><icon-font :icon-class="player ? player.playModel : 'loop'" @click.native="modelClick" class="model" /></li>
+        <li><icon-font :icon-class="player ? player.playModel : 'loop'" class="model" @click.native="modelClick" /></li>
         <li class="prev">
-          <icon-font @click.native="prev" icon-class="prev" />
+          <icon-font icon-class="prev" @click.native="prev" />
         </li>
         <li class="play">
           <icon-font :icon-class="player && player.isPlaying ? 'pause' : 'play'" @click.native="playClick" />
         </li>
         <li class="next">
-          <icon-font @click.native="next" icon-class="next" />
+          <icon-font icon-class="next" @click.native="next" />
         </li>
-        <li><icon-font @click.native="showPopupList" icon-class="play_list" /></li>
+        <li><icon-font icon-class="play_list" @click.native="showPopupList" /></li>
       </ul>
     </div>
     <popupList ref="popupList" @clickPlay="clickPlay" />
@@ -222,12 +222,21 @@ export default {
     min-height: 100vh;
     position: relative;
     overflow: hidden;
-    .bg {
+    .blur, .bg {
       height: 100%;
       position: absolute;
       left: 0;
       right: 0;
       top: 0;
+    }
+    .blur {
+      filter: blur(20PX);
+      transform: scale(1.5);
+      .bg {
+        transform: scale(1);
+      }
+    }
+    .bg {
       background-color: #161824;
       background-position: 50%;
       background-repeat: no-repeat;
@@ -237,9 +246,6 @@ export default {
       transition: opacity .3s linear;
       overflow: hidden;
       opacity: 0.5;
-      &.blur {
-        filter: blur(20PX);
-      }
       &[lazy="loaded"] {
         opacity: 1;
       }
