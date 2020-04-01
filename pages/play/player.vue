@@ -1,9 +1,9 @@
 <template>
   <div class="player">
     <van-nav-bar
+      @click-left="back"
       flex="cross:center box:justify"
       class="header reset"
-      @click-left="back"
     >
       <template slot="left">
         <div class="left">
@@ -12,7 +12,7 @@
       </template>
       <div slot="title" class="title">
         <div class="name">
-          <van-notice-bar class="scroll_txt" color="#fff" background="transparent" :text="songDetail.name" />
+          <van-notice-bar :text="songDetail.name" class="scroll_txt" color="#fff" background="transparent" />
         </div>
         <div class="auth">
           <span>{{ (songDetail.ar.map(item => item.name)).join('/') }}</span> <van-icon name="arrow" />
@@ -42,7 +42,7 @@
           <li><icon-font icon-class="download" /></li>
           <li><icon-font icon-class="effect" /></li>
           <li><icon-font icon-class="comment" /></li>
-          <li><icon-font icon-class="more_vertical" @click.native="showMorePopup" /></li>
+          <li><icon-font @click.native="showMorePopup" icon-class="more_vertical" /></li>
         </ul>
       </div>
     </div>
@@ -57,10 +57,10 @@
         <div style="width: 0" class="height playing-cache" />
         <div style="width: 0" class="height playing-process">
           <div
-            class="circle"
             @touchstart="rangeTouchStart"
             @touchmove="rangeTouchMove"
             @touchend="rangeTouchEnd"
+            class="circle"
           >
             <div class="red" />
           </div>
@@ -75,17 +75,17 @@
     <div class="player_control">
       <audio id="player" :loop="player ? player.playModel == 'once' ? true: false : false" />
       <ul flex="cross:center main:center">
-        <li><icon-font :icon-class="player ? player.playModel : 'loop'" class="model" @click.native="modelClick" /></li>
+        <li><icon-font :icon-class="player ? player.playModel : 'loop'" @click.native="modelClick" class="model" /></li>
         <li class="prev">
-          <icon-font icon-class="prev" @click.native="prev" />
+          <icon-font @click.native="prev" icon-class="prev" />
         </li>
         <li class="play">
           <icon-font :icon-class="player && player.isPlaying ? 'pause' : 'play'" @click.native="playClick" />
         </li>
         <li class="next">
-          <icon-font icon-class="next" @click.native="next" />
+          <icon-font @click.native="next" icon-class="next" />
         </li>
-        <li><icon-font icon-class="play_list" @click.native="showPopupList" /></li>
+        <li><icon-font @click.native="showPopupList" icon-class="play_list" /></li>
       </ul>
     </div>
     <popupList ref="popupList" @clickPlay="clickPlay" />

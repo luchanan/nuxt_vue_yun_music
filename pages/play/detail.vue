@@ -63,8 +63,8 @@
         v-for="(row, index) in playlist.tracks"
         :key="index"
         :class="`list ${row.copyright == 1 ? 'disabled' : ''}`"
-        flex="cross:center box:last"
         @click="goPlayer(row)"
+        flex="cross:center box:last"
       >
         <template slot="title">
           <div class="title" flex="cross:center box:first">
