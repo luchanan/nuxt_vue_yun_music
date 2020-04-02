@@ -32,6 +32,27 @@ export default class Player {
         this.params.endedCb()
       }
     })
+    this.element.addEventListener('progress', () => {
+      let bufferedEnd = this.element.buffered.end(this.element.buffered.length - 1)
+      let duration = this.element.duration
+      if (duration > 0) {
+        document.querySelector('.play_process .playing-cache').style.width = ((bufferedEnd / duration) * 100) + '%'
+      }
+    })
+    this.element.addEventListener('timeupdate', () => {
+      let bufferedEnd = this.element.buffered.end(this.element.buffered.length - 1)
+      let duration = this.element.duration
+      if (duration > 0) {
+        document.querySelector('.play_process .playing-cache').style.width = ((bufferedEnd / duration) * 100) + '%'
+      }
+    })
+  }
+  setBufferProcess () {
+    let bufferedEnd = this.element.buffered.end(this.element.buffered.length - 1)
+    let duration = this.element.duration
+    if (duration > 0) {
+      document.querySelector('.play_process .playing-cache').style.width = ((bufferedEnd / duration) * 100) + '%'
+    }
   }
   changPlay (url) {
     this.resetPlay({ clearCache: 1 })
@@ -138,7 +159,7 @@ export default class Player {
         if (success) { success() }
         this.isPlaying = true
         this.element.play()
-        this.getBufferPer()
+        // this.getBufferPer()
         this.playProcess()
       } else if (error) { error() }
     })

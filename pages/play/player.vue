@@ -73,7 +73,7 @@
       </div>
     </div>
     <div class="player_control">
-      <audio id="player" :loop="player ? player.playModel == 'once' ? true: false : false" />
+      <audio id="player" preload :loop="player ? player.playModel == 'once' ? true: false : false" />
       <ul flex="cross:center main:center">
         <li><icon-font :icon-class="player ? player.playModel : 'loop'" class="model" @click.native="modelClick" /></li>
         <li class="prev">
