@@ -34,18 +34,20 @@ export default class Player {
     })
     this.element.addEventListener('progress', () => {
       let bufferedEnd = this.element.buffered.end(this.element.buffered.length - 1)
+      console.log(bufferedEnd)
+      console.log(this.element.duration)
       let duration = this.element.duration
       if (duration > 0) {
         document.querySelector('.play_process .playing-cache').style.width = ((bufferedEnd / duration) * 100) + '%'
       }
     })
-    this.element.addEventListener('timeupdate', () => {
-      let bufferedEnd = this.element.buffered.end(this.element.buffered.length - 1)
-      let duration = this.element.duration
-      if (duration > 0) {
-        document.querySelector('.play_process .playing-cache').style.width = ((bufferedEnd / duration) * 100) + '%'
-      }
-    })
+    // this.element.addEventListener('timeupdate', () => {
+    //   let bufferedEnd = this.element.buffered.end(this.element.buffered.length - 1)
+    //   let duration = this.element.duration
+    //   if (duration > 0) {
+    //     document.querySelector('.play_process .playing-cache').style.width = ((bufferedEnd / duration) * 100) + '%'
+    //   }
+    // })
   }
   setBufferProcess () {
     let bufferedEnd = this.element.buffered.end(this.element.buffered.length - 1)

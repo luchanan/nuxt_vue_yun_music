@@ -1,9 +1,9 @@
 <template>
   <div class="player">
     <van-nav-bar
+      @click-left="back"
       flex="cross:center box:justify"
       class="header reset"
-      @click-left="back"
     >
       <template slot="left">
         <div class="left">
@@ -25,16 +25,35 @@
       </template>
     </van-nav-bar>
     <div v-lazy:background-image="`//music.163.com/api/img/blur/${songDetail.al.pic_str ? songDetail.al.pic_str : songDetail.al.pic}`" class="bg" />
-    <div class="song-wrap">
+    <div :class="{'song-wrap': true, 'rotating': player && !player.isPlaying}">
       <div class="song-disc">
-        <div class="song-turn">
-          <div class="song-rollwrap">
-            <div :class="`song-img circling ${player && player.isPlaying ? '' : 'pause'}`">
-              <van-image :src="`${songDetail.al.picUrl}`" class="img" lazy-load />
+        <van-swipe :show-indicators="false" class="song-disc-swiper">
+          <van-swipe-item>
+            <div class="song-turn">
+              <div class="song-rollwrap">
+                <div :class="`song-img circling ${player && player.isPlaying ? '' : 'pause'}`">
+                  <!-- <van-image :src="`${songDetail.al.picUrl}`" class="img" lazy-load /> -->
+                </div>
+              </div>
+              <div class="song-lgour">
+                <div :class="`song-light circling ${player && player.isPlaying ? '' : 'pause'}`" />
+              </div>
             </div>
-          </div>
-          <div class="song-lgour" />
-        </div>
+          </van-swipe-item>
+          <van-swipe-item>
+            <div class="song-turn">
+              <div class="song-rollwrap">
+                <div :class="`song-img circling ${player && player.isPlaying ? '' : 'pause'}`">
+                  <van-image :src="`${songDetail.al.picUrl}`" class="img" lazy-load />
+                </div>
+              </div>
+              <div class="song-lgour">
+                <div :class="`song-light circling ${player && player.isPlaying ? '' : 'pause'}`" />
+              </div>
+            </div>
+          </van-swipe-item>
+        </van-swipe>
+        <div class="circle" />
       </div>
       <div class="song-action">
         <ul flex="cross:center main:center">
@@ -42,7 +61,7 @@
           <li><icon-font icon-class="download" /></li>
           <li><icon-font icon-class="effect" /></li>
           <li><icon-font icon-class="comment" /></li>
-          <li><icon-font icon-class="more_vertical" @click.native="showMorePopup" /></li>
+          <li><icon-font @click.native="showMorePopup" icon-class="more_vertical" /></li>
         </ul>
       </div>
     </div>
@@ -57,10 +76,10 @@
         <div style="width: 0" class="height playing-cache" />
         <div style="width: 0" class="height playing-process">
           <div
-            class="circle"
             @touchstart="rangeTouchStart"
             @touchmove="rangeTouchMove"
             @touchend="rangeTouchEnd"
+            class="circle"
           >
             <div class="red" />
           </div>
@@ -73,19 +92,19 @@
       </div>
     </div>
     <div class="player_control">
-      <audio id="player" preload :loop="player ? player.playModel == 'once' ? true: false : false" />
+      <audio id="player" :loop="player ? player.playModel == 'once' ? true: false : false" preload />
       <ul flex="cross:center main:center">
-        <li><icon-font :icon-class="player ? player.playModel : 'loop'" class="model" @click.native="modelClick" /></li>
+        <li><icon-font :icon-class="player ? player.playModel : 'loop'" @click.native="modelClick" class="model" /></li>
         <li class="prev">
-          <icon-font icon-class="prev" @click.native="prev" />
+          <icon-font @click.native="prev" icon-class="prev" />
         </li>
         <li class="play">
           <icon-font :icon-class="player && player.isPlaying ? 'pause' : 'play'" @click.native="playClick" />
         </li>
         <li class="next">
-          <icon-font icon-class="next" @click.native="next" />
+          <icon-font @click.native="next" icon-class="next" />
         </li>
-        <li><icon-font icon-class="play_list" @click.native="showPopupList" /></li>
+        <li><icon-font @click.native="showPopupList" icon-class="play_list" /></li>
       </ul>
     </div>
     <popupList ref="popupList" @clickPlay="clickPlay" />
@@ -201,6 +220,7 @@ export default {
 </script>
 
 <style lang="less">
+  @cover-padding: 110px;
   @keyframes circling {
     0% {
       transform: rotate(0deg)
@@ -210,6 +230,12 @@ export default {
     }
   }
   .player {
+    .circling {
+      animation: circling 20s linear infinite;
+    }
+    .circling.pause {
+      animation-play-state: paused;
+    }
     .scroll_txt {
       height: auto;
       padding: 0;
@@ -268,28 +294,53 @@ export default {
     .song-wrap {
       padding: 243px 0 0 0;
       position: relative;
+      overflow: hidden;
       &:after {
         content: " ";
         position: absolute;
-        width: 330px;
-        height: 471px;
-        top: 0;
+        width: 329px;
+        height: 521px;
+        top: -48px;
         left: 50%;
         margin-left: -44px;
-        background-image: url('~@/assets/images/player/needle-plus.png');
+        background-image: url('~@/assets/images/player/needle-plus-circle.png');
         background-size: contain;
         z-index: 2;
+        transform-origin: 50px 50px; // 以灰色小圆点为中心旋转
+        transition: transform .25s linear;
+        transform: rotate(0deg);
+      }
+      &.rotating:after {
+        transform: rotate(-25deg);
       }
       .song-disc {
-        margin: 0 auto;
-        width: 1026px;
+        width: 100%;
         height: 1026px;
         position: relative;
+      }
+      .song-disc-swiper {
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+      }
+      .circle {
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        border-radius: 50%;
+        width: 100%;
+        height: 100%;
+        width: 1020px;
+        height: 1020px;
+        border: solid 40px rgba(255, 255, 255, 0.1);
+        margin: 0 auto;
       }
       .song-rollwrap {
         width: 636px;
         height: 636px;
-        margin: -318px 0 0 -318px;
+        margin: -320px 0 0 -318px;
         position: absolute;
         left: 50%;
         top: 50%;
@@ -302,38 +353,39 @@ export default {
           height: 100%;
           overflow: hidden;
         }
-        .circling {
-          animation: circling 20s linear infinite;
-        }
-        .circling.pause {
-          animation-play-state: paused;
-        }
       }
-      .song-lgour {
-        &::before {
-          content: " ";
-          position: absolute;
-          left: 0;
-          right: 0;
-          top: 0;
-          bottom: 0;
-          background: url('~@/assets/images/player/disc_light-plus.png');
-          background-size: contain;
-        }
+      .song-lgour, .song-light {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        padding: 0 @cover-padding;
+        z-index: 2;
+      }
+      .song-light {
+        background: url('~@/assets/images/player/disc_light-plus.png');
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-origin: content-box;
       }
       .song-turn {
+        padding: 0 @cover-padding;
         width: 100%;
         height: 100%;
         &::before {
           content: " ";
+          padding: 0 @cover-padding;
           position: absolute;
           left: 0;
           right: 0;
           top: 0;
           bottom: 0;
           z-index: 2;
-          background: url('~@/assets/images/player/disc-plus.png');
+          background: url('~@/assets/images/player/disc-plus-no-border.png');
           background-size: contain;
+          background-repeat: no-repeat;
+          background-origin: content-box;
         }
       }
     }
