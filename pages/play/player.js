@@ -4,6 +4,7 @@ export default class Player {
     this.element = element
     this.params = params
     this.isPlaying = false
+    this.isLoading = false
     this.duration = 0
     this.currentTime = 0
     this.timer = null
@@ -20,6 +21,29 @@ export default class Player {
   }
   init () {
     this.element.src = this.params.url
+    this.element.addEventListener('loadstart', () => {
+      console.log('开始请求')
+      this.isLoading = true
+    })
+    this.element.addEventListener('error', () => {
+      console.log('请求失败')
+    })
+    this.element.addEventListener('stalled', () => {
+      console.log('网络失速')
+    })
+    this.element.addEventListener('waiting', () => {
+      console.log('等待数据')
+      this.isLoading = true
+    })
+    this.element.addEventListener('canplaythrough', () => {
+      console.log('载入完成')
+    })
+    this.element.addEventListener('play', () => {
+      console.log('播放')
+    })
+    this.element.addEventListener('pause', () => {
+      console.log('暂停')
+    })
     this.element.addEventListener('canplay', () => {
       // 音频总时长, or监听loadedmetadata事件
       this.duration = this.element.duration

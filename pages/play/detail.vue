@@ -62,9 +62,9 @@
       <van-cell
         v-for="(row, index) in playlist.tracks"
         :key="index"
-        :class="{'list': true, 'disabled': privileges[index].pl === 0 && !/1152|1028|1088|1092/.test(privileges[index].flag)}"
-        @click="goPlayer(row)"
+        :class="{'list': true, 'disabled': privileges[index].pl === 0 && !/1152|1028|1088|1092|1284/.test(privileges[index].flag)}"
         flex="cross:center box:last"
+        @click="goPlayer(row)"
       >
         <template slot="title">
           <div class="title" flex="cross:center box:first">
@@ -76,10 +76,10 @@
                 {{ row.name }}
               </div>
               <div class="memo gray">
-                <span v-if="privileges[index].fee === 1" class="icon vip">VIP</span>
-                <span v-if="/1152|1028|1088|1092/.test(privileges[index].flag)" class="icon listen">试听</span>
-                <span v-if="/64|68|1088|1092/.test(privileges[index].flag)" class="icon only">独家</span>
-                <span v-if="privileges[index].maxbr === 999000" class="icon sq">SQ</span>
+                <icon-font v-if="privileges[index].fee === 1" icon-class="vipb" class="icon" title="VIP" />
+                <icon-font v-if="/1152|1028|1088|1092|1284/.test(privileges[index].flag)" icon-class="listen" class="icon" title="试听" />
+                <icon-font v-if="/64|66|68|1088|1092/.test(privileges[index].flag)" icon-class="only" class="icon" title="独家" />
+                <icon-font v-if="privileges[index].maxbr === 999000" icon-class="sq" class="icon" title="SQ" />
                 {{ (row.ar.map(item => item.name)).join('/') }} - {{ row.al.name }}
               </div>
             </div>
@@ -268,6 +268,12 @@ export default {
       }
       .number {
         font-size: 50px;
+      }
+      .iconsq, .iconlisten, .icononly {
+        color: #FA6B4D;
+      }
+      .iconvipb {
+        color: #D33A31;
       }
       .memo {
         font-size: 36px;

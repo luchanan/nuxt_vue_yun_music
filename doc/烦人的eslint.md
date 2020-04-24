@@ -19,3 +19,7 @@ devModules: [
   }]
 ]
 ```
+
+https://github.com/nuxt/eslint-plugin-nuxt
+
+https://eslint.vuejs.org/rules/attributes-order.html

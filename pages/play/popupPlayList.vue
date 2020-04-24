@@ -26,7 +26,7 @@
         </div>
       </li>
     </ul>
-    <div @click="visible = false" class="van-hairline--top close">
+    <div class="van-hairline--top close" @click="visible = false">
       关闭
     </div>
   </van-popup>

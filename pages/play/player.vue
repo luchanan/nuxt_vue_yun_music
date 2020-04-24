@@ -1,9 +1,9 @@
 <template>
   <div class="player">
     <van-nav-bar
-      @click-left="back"
       flex="cross:center box:justify"
       class="header reset"
+      @click-left="back"
     >
       <template slot="left">
         <div class="left">
@@ -27,20 +27,8 @@
     <div v-lazy:background-image="`//music.163.com/api/img/blur/${songDetail.al.pic_str ? songDetail.al.pic_str : songDetail.al.pic}`" class="bg" />
     <div :class="{'song-wrap': true, 'rotating': player && !player.isPlaying}">
       <div class="song-disc">
-        <van-swipe :show-indicators="false" class="song-disc-swiper">
-          <van-swipe-item>
-            <div class="song-turn">
-              <div class="song-rollwrap">
-                <div :class="`song-img circling ${player && player.isPlaying ? '' : 'pause'}`">
-                  <!-- <van-image :src="`${songDetail.al.picUrl}`" class="img" lazy-load /> -->
-                </div>
-              </div>
-              <div class="song-lgour">
-                <div :class="`song-light circling ${player && player.isPlaying ? '' : 'pause'}`" />
-              </div>
-            </div>
-          </van-swipe-item>
-          <van-swipe-item>
+        <swiper ref="swiper" class="song-disc-swiper" :options="swiperOption">
+          <swiper-slide>
             <div class="song-turn">
               <div class="song-rollwrap">
                 <div :class="`song-img circling ${player && player.isPlaying ? '' : 'pause'}`">
@@ -51,8 +39,8 @@
                 <div :class="`song-light circling ${player && player.isPlaying ? '' : 'pause'}`" />
               </div>
             </div>
-          </van-swipe-item>
-        </van-swipe>
+          </swiper-slide>
+        </swiper>
         <div class="circle" />
       </div>
       <div class="song-action">
@@ -61,7 +49,7 @@
           <li><icon-font icon-class="download" /></li>
           <li><icon-font icon-class="effect" /></li>
           <li><icon-font icon-class="comment" /></li>
-          <li><icon-font @click.native="showMorePopup" icon-class="more_vertical" /></li>
+          <li><icon-font icon-class="more_vertical" @click.native="showMorePopup" /></li>
         </ul>
       </div>
     </div>
@@ -76,11 +64,14 @@
         <div style="width: 0" class="height playing-cache" />
         <div style="width: 0" class="height playing-process">
           <div
+            class="circle"
             @touchstart="rangeTouchStart"
             @touchmove="rangeTouchMove"
             @touchend="rangeTouchEnd"
-            class="circle"
           >
+            <div :class="{'loading': true, 'yes': player && !player.isLoading}">
+              <img src="@/assets/images/player/play-loading.gif">
+            </div>
             <div class="red" />
           </div>
         </div>
@@ -94,17 +85,17 @@
     <div class="player_control">
       <audio id="player" :loop="player ? player.playModel == 'once' ? true: false : false" preload />
       <ul flex="cross:center main:center">
-        <li><icon-font :icon-class="player ? player.playModel : 'loop'" @click.native="modelClick" class="model" /></li>
+        <li><icon-font :icon-class="player ? player.playModel : 'loop'" class="model" @click.native="modelClick" /></li>
         <li class="prev">
-          <icon-font @click.native="prev" icon-class="prev" />
+          <icon-font icon-class="prev" @click.native="prev" />
         </li>
         <li class="play">
           <icon-font :icon-class="player && player.isPlaying ? 'pause' : 'play'" @click.native="playClick" />
         </li>
         <li class="next">
-          <icon-font @click.native="next" icon-class="next" />
+          <icon-font icon-class="next" @click.native="next" />
         </li>
-        <li><icon-font @click.native="showPopupList" icon-class="play_list" /></li>
+        <li><icon-font icon-class="play_list" @click.native="showPopupList" /></li>
       </ul>
     </div>
     <popupList ref="popupList" @clickPlay="clickPlay" />
@@ -116,6 +107,8 @@
 import popupList from './popupPlayList'
 import morePopup from './morePopup'
 import Player from './player.js'
+import { Swiper, SwiperSlide } from 'vue-awesome-swiper'
+import 'swiper/css/swiper.css'
 export default {
   page: {
     footer: false
@@ -125,10 +118,17 @@ export default {
       title: `${this.songDetail.name} ${this.songDetail.alia.length > 0 ? '（' + this.songDetail.alia.join('/') + '）' : ''} - ${this.songDetail.ar.map(item => item.name).join('/')} - 单曲 - 网易云音乐`
     }
   },
-  components: { popupList, morePopup },
+  components: { popupList, morePopup, Swiper, SwiperSlide },
   data () {
     return {
-      player: null
+      player: null,
+      swiperOption: {
+      }
+    }
+  },
+  computed: {
+    swiper () {
+      return this.$refs.swiper.$swiper
     }
   },
   async asyncData ({ req, res, error, params, $axios, query }) {
@@ -449,6 +449,20 @@ export default {
               height: 50px;
               background: #fff;
               border-radius: 50%;
+              .loading {
+                text-align: center;
+                display: none;
+                &.yes {
+                  display: block;
+                }
+                img {
+                  width: 36px;
+                  position: absolute;
+                  top:50%;
+                  left:50%;
+                  transform: translate(-50%,-50%);
+                }
+              }
               .red {
                 position: absolute;
                 margin-left: -6px;

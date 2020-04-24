@@ -25,7 +25,9 @@
     "lodash": "^4.17.15",
     "nuxt": "^2.0.0",
     "postcss-aspect-ratio-mini": "^1.0.1",
-    "vant": "^2.5.5"
+    "swiper": "^5.3.7",
+    "vant": "^2.5.5",
+    "vue-awesome-swiper": "^4.1.1"
   },
   "devDependencies": {
     "@nuxtjs/eslint-config": "^1.0.1",

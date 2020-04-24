@@ -6,6 +6,41 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "14282929",
+      "name": "下载",
+      "font_class": "download",
+      "unicode": "e629",
+      "unicode_decimal": 58921
+    },
+    {
+      "icon_id": "14274658",
+      "name": "sq",
+      "font_class": "sq",
+      "unicode": "e627",
+      "unicode_decimal": 58919
+    },
+    {
+      "icon_id": "14270897",
+      "name": "vip",
+      "font_class": "vipb",
+      "unicode": "e624",
+      "unicode_decimal": 58916
+    },
+    {
+      "icon_id": "14270954",
+      "name": "lisen",
+      "font_class": "listen",
+      "unicode": "e625",
+      "unicode_decimal": 58917
+    },
+    {
+      "icon_id": "14270963",
+      "name": "duijia",
+      "font_class": "only",
+      "unicode": "e626",
+      "unicode_decimal": 58918
+    },
+    {
       "icon_id": "1684210",
       "name": "delete2",
       "font_class": "delete",
@@ -25,13 +60,6 @@
       "font_class": "add",
       "unicode": "e60e",
       "unicode_decimal": 58894
-    },
-    {
-      "icon_id": "13251239",
-      "name": "下载",
-      "font_class": "download",
-      "unicode": "e8c6",
-      "unicode_decimal": 59590
     },
     {
       "icon_id": "13712880",

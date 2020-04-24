@@ -42,7 +42,7 @@
           <div slot="title" class="ground-title">
             <icon-font class="left-icon" icon-class="arrow-right" />{{ row.name }}
           </div>
-          <van-cell v-for="(items, each) in row.list" :key="each" @click="$router.push({path: 'play/detail', query: {id: items.id}})" class="cells" is-link>
+          <van-cell v-for="(items, each) in row.list" :key="each" class="cells" is-link @click="$router.push({path: 'play/detail', query: {id: items.id}})">
             <template slot="title">
               <div flex="main:center cross:center box:first">
                 <div class="img_wrapper" aspectratio>
