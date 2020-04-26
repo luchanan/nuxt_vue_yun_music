@@ -63,8 +63,8 @@
         v-for="(row, index) in playlist.tracks"
         :key="index"
         :class="{'list': true, 'disabled': privileges[index].pl === 0 && !/1152|1028|1088|1092|1284/.test(privileges[index].flag)}"
-        flex="cross:center box:last"
         @click="goPlayer(row)"
+        flex="cross:center box:last"
       >
         <template slot="title">
           <div class="title" flex="cross:center box:first">
@@ -118,7 +118,7 @@ export default {
   },
   mounted () {
     this.$store.commit('player/updateId', this.playlist.id)
-    this.$store.commit('player/updateList', this.playlist.tracks)
+    this.$store.commit('player/updatePlayList', this.playlist.tracks)
   },
   methods: {
     goPlayer (row) {

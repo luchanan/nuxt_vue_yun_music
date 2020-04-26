@@ -58,20 +58,17 @@ export default class Player {
     })
     this.element.addEventListener('progress', () => {
       let bufferedEnd = this.element.buffered.end(this.element.buffered.length - 1)
-      console.log(bufferedEnd)
-      console.log(this.element.duration)
+      console.log(`当前缓存进度：${bufferedEnd}（秒）`)
       let duration = this.element.duration
       if (duration > 0) {
         document.querySelector('.play_process .playing-cache').style.width = ((bufferedEnd / duration) * 100) + '%'
       }
     })
-    // this.element.addEventListener('timeupdate', () => {
-    //   let bufferedEnd = this.element.buffered.end(this.element.buffered.length - 1)
-    //   let duration = this.element.duration
-    //   if (duration > 0) {
-    //     document.querySelector('.play_process .playing-cache').style.width = ((bufferedEnd / duration) * 100) + '%'
-    //   }
-    // })
+    this.element.addEventListener('timeupdate', () => {
+      let now = this.element.currentTime / this.duration * 100
+      this.currentTime = this.element.currentTime // 当前播放时长
+      document.querySelector('.play_process .playing-process').style.width = `${now}%`
+    })
   }
   setBufferProcess () {
     let bufferedEnd = this.element.buffered.end(this.element.buffered.length - 1)
@@ -139,12 +136,12 @@ export default class Player {
   }
   playProcess () {
     // 播放进度样式控制
-    window.clearInterval(this.timer)
-    this.timer = setInterval(() => {
-      let now = this.element.currentTime / this.duration * 100
-      this.currentTime = this.element.currentTime // 当前播放时长
-      document.querySelector('.play_process .playing-process').style.width = `${now}%`
-    }, 1000)
+    // window.clearInterval(this.timer)
+    // this.timer = setInterval(() => {
+    //   let now = this.element.currentTime / this.duration * 100
+    //   this.currentTime = this.element.currentTime // 当前播放时长
+    //   document.querySelector('.play_process .playing-process').style.width = `${now}%`
+    // }, 1000)
   }
   setPlayCurrentTime (progress, type = 0) {
     if (this.duration) {

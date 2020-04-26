@@ -27,8 +27,8 @@
     <div v-lazy:background-image="`//music.163.com/api/img/blur/${songDetail.al.pic_str ? songDetail.al.pic_str : songDetail.al.pic}`" class="bg" />
     <div :class="{'song-wrap': true, 'rotating': player && !player.isPlaying}">
       <div class="song-disc">
-        <swiper ref="swiper" :auto-update="false" :options="swiperOption" class="swiper-container song-disc-swiper">
-          <swiper-slide v-for="(row, index) in swiperPlayList" v-if="swiperPlayList.length > 0" :key="index">
+        <swiper ref="swiper" :options="swiperOption" class="swiper-container song-disc-swiper">
+          <swiper-slide v-for="(row, index) in swiperPlayList" :key="index">
             <div class="song-turn">
               <div class="song-rollwrap">
                 <div :style="{ animationPlayState: player && player.isPlaying ? 'running' : 'paused' }" :class="{'circling': row.id === currentPlayId }" class="song-img">
@@ -124,11 +124,6 @@ export default {
     return {
       player: null,
       swiperOption: {
-        on: {
-          init: () => {
-            // setTimeout(() => this.jumpToSlide())
-          }
-        }
       }
     }
   },
