@@ -25,7 +25,7 @@
       </template>
     </van-nav-bar>
     <div v-lazy:background-image="`//music.163.com/api/img/blur/${songDetail.al.pic_str ? songDetail.al.pic_str : songDetail.al.pic}`" class="bg" />
-    <div :class="{'song-wrap': true, 'rotating': player && !player.isPlaying}">
+    <div :class="{'song-wrap': true, 'rotating': (player && !player.isPlaying) || (player && player.isPlaying && !needleDown)}">
       <div class="song-disc">
         <swiper ref="swiper" :auto-update="false" :options="swiperOption" class="swiper-container song-disc-swiper">
           <swiper-slide v-for="(row, index) in swiperPlayList" v-if="swiperPlayList.length > 0" :key="index">
@@ -122,11 +122,26 @@ export default {
   components: { popupList, morePopup, Swiper, SwiperSlide },
   data () {
     return {
+      needleDown: true,
       player: null,
       swiperOption: {
         on: {
           init: () => {
             // setTimeout(() => this.jumpToSlide())
+          },
+          slidePrevTransitionEnd: () => {
+            // 滑动到上一首
+            console.log('pre fish')
+          },
+          slideNextTransitionEnd: () => {
+            // 滑动到下一首
+            console.log('next fish')
+          },
+          touchMove: () => {
+            this.needleDown = false
+          },
+          touchEnd: () => {
+            this.needleDown = true
           }
         }
       }
