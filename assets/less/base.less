@@ -122,10 +122,15 @@ img {
   &.reset {
     height: 192px - @status-height;
     line-height: 192px - @status-height;
+    .van-nav-bar__content {
+      height: 100%;
+    }
     .van-nav-bar__title {
       line-height: 1.2;
       color: @font-white-color;
+      width: 100%;
       max-width: 100%;
+      margin: 0;
     }
     .van-icon, .iconfont {
       color: #fff;
@@ -138,10 +143,14 @@ img {
       padding: 0 46px 0 53px;
       i {
         font-size: 60px;
+        &::before {
+          vertical-align: middle;
+        }
       }
     }
     .van-nav-bar__right {
       right: 0;
+      padding: 0;
     }
     .right {
       padding: 0 53px 0 0;
@@ -152,6 +161,7 @@ img {
     }
     .van-nav-bar__left {
       left: 0;
+      padding: 0;
     }
     .name {
       font-size: 48px;

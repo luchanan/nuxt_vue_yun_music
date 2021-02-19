@@ -15,6 +15,7 @@ module.exports = {
   rules: {
     'nuxt/no-cjs-in-config': 'off',
     'prefer-const': 'off',
-    'no-console': 'off'
+    'no-console': 'off',
+    'vue/comment-directive': 0
   }
 }

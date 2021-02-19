@@ -59,7 +59,7 @@
         </div>
       </li>
     </ul>
-    <div class="bind_phone">
+    <div flex="main:justify box:last" class="bind_phone">
       绑定手机号，提高帐号安全性，减低帐号被盗风险。 <span class="align-center">立即绑定</span>
     </div>
     <div v-for="(row, index) in rowData" :key="index" class="liGroup">
@@ -219,8 +219,7 @@ export default {
         font-size: 34px;
         color: #ff0000;
         border: solid 1px #ff0000;
-        width: 188px;
-        padding: 15px 0;
+        padding: 15px 10px;
         display: inline-block;
       }
     }

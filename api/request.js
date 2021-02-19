@@ -1,8 +1,8 @@
 import qs from 'qs'
 import { merge } from 'lodash'
+import { Cookie } from '@/utils/storage'
 import urlName from './urlName'
 import axios from '~/utils/axios'
-import { Cookie } from '@/utils/storage'
 
 function dealParams (params) {
   let obj = {

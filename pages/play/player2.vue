@@ -104,11 +104,11 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+import { Swiper, SwiperSlide } from 'vue-awesome-swiper'
 import popupList from './popupPlayList'
 import morePopup from './morePopup'
 import Player from './player.js'
-import { mapState } from 'vuex'
-import { Swiper, SwiperSlide } from 'vue-awesome-swiper'
 import 'swiper/css/swiper.css'
 export default {
   page: {
